@@ -14,7 +14,7 @@ This app is made using Django with PostgresSQL
 
 ## Environment Setup 👷‍♂️
 Before setting up the project you will need to configure few things.\
-First you will need to get TMDB API from [here](https://www.themoviedb.org/settings/api) \
+First you will need to get TMDB API KEY from [here](https://www.themoviedb.org/settings/api) \
 You will need to create postgres database named `CHILLFLIX`
 ## Installation ⚡️
 Creating Virtual Environment
@@ -27,7 +27,7 @@ soruce chillflix_env/bin/activate
 ```
 Clone the project to this directory 
 ```bash
-git clone {project url}  
+git clone https://github.com/Riken-Shah/Chillflix.git
 ```
 Add .env file where there is [settings.py](./chillflix/settings.py) and add the following value
 
