@@ -1,0 +1,71 @@
+{% extends 'home/base.html' %}
+<!-- Title -->
+{% block title %}
+Search
+{% endblock %}
+{% load static %}
+
+{% block content %}
+    <div class="container infinite-container ">
+            <div class="grid infinite-item">
+                                    {% for item in resp %}
+
+                    <div class="gutter-sizer"></div>
+                        <div class="grid-item ">
+                        <div class="col">
+    {#                <div class="row">{% firstof item.name item.title %}</div>#}
+                        <div class="row">
+                            <img height="220px" src="https://image.tmdb.org/t/p/w220_and_h330_face{{ item.poster_path }}">
+                        </div>
+                    </div>
+                    </div>
+                                    {% endfor %}
+
+            </div>
+    </div>
+{% if page_obj.has_next %}
+<a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+{% else %}
+
+{% endif %}
+
+<div class="d-flex justify-content-center" style="display:none;">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+
+{% endblock%}
+
+{% block add_js %}
+    <script src="{% static 'home/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'home/js/infinite.min.js' %}"></script>
+        <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
+    <script src="{% static 'home/js/search.js' %}"></script>
+
+    <script>
+        const infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+            handler: function (direction) {
+            },
+            offset: 'bottom-in-view',
+
+            onBeforePageLoad: function () {
+                $('.spinner-border').show();
+                     $('.grid').packery({
+                 gutter: 10
+                })
+
+            },
+            onAfterPageLoad: function () {
+                $('.spinner-border').hide();
+                $('.grid').packery({
+                 gutter: 10
+                })
+                console.log('yep')
+            }
+
+        })
+    </script>
+{% endblock %}

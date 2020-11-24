@@ -1,0 +1,298 @@
+{% extends 'home/base.html' %}
+{% block title %}
+
+Home
+{% endblock %}
+{% load static %}
+{% load player_tags %}
+{% load tv_templatetags %}
+{#{% load user_agents %}#}
+{% block content %}
+<!-- Cast Info -->
+<div class="main-carousel">
+    <div class="owl-carousel owl-theme" id='main-carousel'>
+        {% for item in carousel %}
+            {% set item|get_type as type %}
+            {% if type == 'tv' %}
+                <!-- Valid All Season -->
+                {% get_all_season item.seasons as seasons%}
+                {% set item.episode_run_time.0 as runtime %}
+                {% set item.first_air_date as year %}
+                {% set item.content_ratings as certification %}
+
+                {% set 30 as max_overview_word %}
+                {% set 'Creators' as creators_name %}
+                {% set item.created_by as creators %}
+                {% set item.credits as credits %}
+                {% set item.similar.results as similar_items %}
+
+
+{#                <style rel="stylesheet">#}
+{#                    .small-info-box {#}
+{#                        min-width: max-content;#}
+{#                    }#}
+{#                </style>#}
+            {% else %}
+                {% set item.runtime as runtime %}
+                {% set item.release_date as year %}
+                {% get_certification_movie item.releases as certification %}
+                {% set 13 as max_overview_word %}
+                {% set 'Directors' as creators_name %}
+{#                {% get_movie_credits item.tmdb_id as credits%}#}
+                {% set item.credits as credits%}
+            {% endif %}
+
+        <div class="item text-center row">
+            <!-- Content Row for {% firstof item.name item.title %} -->
+            <div class="col carousel-content-row">
+                <div class="title-container">
+                    <span class="main-title">{% firstof item.title item.name %}
+                        {#                        ({% firstof item.release_date|date_fix item.first_air_date|date_fix %})#}
+                    </span>
+                    <div class="d-flex item-info hide">
+                        <!-- Runtime -->
+                        <div class="runtime">
+{#                            {% firstof item.runtime item.epi_runtime as runtime %}#}
+                            <span>{% get_hr_min_format runtime %}</span>
+                        </div>
+                        <div class="dot"></div>
+                        <!-- Certification -->
+                        <div class="certification">
+                            <span>{% firstof item.certification item.rating 'NA' %}</span>
+                        </div>
+                        <div class="dot"></div>
+                        <!-- Year -->
+                        <div>
+                            <span>{% firstof item.release_date|date:'Y' item.first_air_date|date:'Y' 'NA' %}</span>
+                        </div>
+                        <!-- Rating -->
+                        <div class="dot"></div>
+                        <div class="rating">
+                            {% resolve_rating item.vote_average as ratings %}
+                            {% if ratings|length > 0 %}
+                            <span>
+                                <span style="color: white;letter-spacing: unset;">
+                                    {{ ratings|length }}
+                                </span>
+                                <span class="fa fa-star checked" style="font-size: 1.5vw"></span>
+                            </span>
+                            {% endif %}
+                            {#                            {% for star in ratings %}#}
+                            {#                            <span class="fa fa-star {{ star }}"></span>#}
+                            {#                            {% endfor %}#}
+                        </div>
+                    </div>
+                </div>
+                <!-- Overview -->
+                <div class="overview-container hide">
+                    <p class="overview-text">{{ item.overview|truncatewords:20   }}</p>
+                </div>
+                <!-- Genres -->
+                <div class="genres-container hide">
+                    <b><span style="padding-right: 1rem">Genres: </span> </b>
+                    {% for genre in item.genres.all|slice:2 %}
+                    <em><span>{{ genre }}
+                            {% if forloop.revcounter0 != 0 %}
+                            ,
+                            {% endif %}
+                        </span></em>
+                    {% endfor %}
+                </div>
+                <!-- Buttons (Actions) -->
+                <div class="actions row d-inline-flex text-center">
+                    <!-- Watch Movie -->
+                    <div class="mr-3 p-2 bg-danger small-info-button">
+                        <a class="" style="font-weight: 500;">WATCH MOVIE</a>
+                        <i class="fa fa-play-circle" style="padding-left: 5px;font-size: calc(100% + 8px)"></i>
+                    </div>
+                    <!-- Add to List -->
+                    <div class="mr-3 p-1 bg-transparent border-danger rounded-circle d-inline-flex"
+                        style="border: solid 2px red">
+                        <button class="bg-transparent border-0">
+                            <i class="fa fa-plus" aria-hidden="true"
+                                style="color: white;font-size: calc(100% + .4vh)"></i>
+                        </button>
+                    </div>
+
+
+                    {#                    <!-- Watch Movie -->#}
+                    {#                    <div class="button-outline btn col" id="playBtn"  style="max-width: max-content;">#}
+                    {#                        <button class="btn btn-danger" id="playBtn">#}
+                    {#                            <i class="fa fa-play-circle" style="font-size: 2.5vw;"></i>#}
+                    {#                            <span>Watch Movie</span>#}
+                    {#                        </button>#}
+                    {#                    </div>#}
+                    {#                    <!-- Play Trailer -->#}
+                    {#                    <div class="button-outline btn" style="align-self: center;padding: 1vh;" id="trailerBtn">#}
+                    {#                        <button class="btn btn-danger" id="trailerBtn">#}
+                    {#                            <i class="fa fa-plus" aria-hidden="true"></i>                        </button>#}
+                    {#                    </div>#}
+                </div>
+                <!-- Trailer -->
+                <div class="trailer col hide">
+                    <span class="row">Trailer:
+                    </span>
+                    <div class="trailer-imgs">
+                        <picture class="owl-lazy">
+                            <source media="(min-width: 2000px)" srcset="https://image.tmdb.org/t/p/w500{{ item.backdrop_path }}">
+                                                        <img class="owl-lazy" style="width: auto;"
+                            data-src="https://image.tmdb.org/t/p/w185{{ item.backdrop_path }}" alt="">
+
+                        </picture>
+                        <!-- <img class="owl-lazy" style="width: auto;" -->
+                            <!-- data-src="https://image.tmdb.org/t/p/w185{{ item.backdrop_path }}" alt=""> -->
+                        <span class="trailer-play" style="font-size: 3vh;">
+                            <i class="fa fa-play"></i>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Image Container for {% firstof item.name item.title %} -->
+            <div class="col carousel-img-container">
+                <!-- Testing Purpose Bg-image -->
+                <input type="hidden" value="{{ item.backdrop_path }}"
+                    id="bg-img-{{ forloop.counter0 }}">
+                <!-- Trailer -->
+                <input id="carousel-trailer-{{ forloop.counter0 }}" type="hidden"
+                    value="{{ item.videos.all|get_trailer_link }}">
+
+                <!-- Image -->
+                {#                <img class="main-carousel-img"#}
+                {#                    src="https://image.tmdb.org/t/p/w1280{{ item.backdrop_path }}" alt="" src="">#}
+                <img class="main-carousel-img owl-lazy"
+                    data-src="https://image.tmdb.org/t/p/w1280{{ item.backdrop_path }}" alt="">
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="trailerOptions" class="row">
+        <span class="col" id="mute"><i class="fas fa-volume-up" aria-hidden="true"></i></span>
+    </div>
+</div>
+<!-- Completeing Div Tag of Bg-Test -->
+</div>
+{#    </div>#}
+<div class="infinite-container container-fluid">
+    <!-- Recomendation -->
+    <div class="infinite-item">
+        {% for row in rows %}
+            <h2>{{ row.name }}</h2>
+            <div class="owl-carousel owl-theme rows">
+                {% for item in row.items %}
+                <div class="item text-center row-item">
+                    {% if item.poster_path %}
+
+                    <a href="/{{ item|get_type }}/{{ item.id }}">
+                        <img class="owl-lazy" style="border-radius: 15px"
+                            data-src="https://image.tmdb.org/t/p/w342{{ item.poster_path }}" alt="">
+
+                    {% else %}
+                    <img class="owl-lazy" data-src="https://artworks.thetvdb.com/person/actor.jpg" alt="">
+                    {% endif %}
+                    <div class="item-content">
+                        <span class="title">{% firstof item.title item.name %}</span>
+                        <p class="overview">
+                            {{ item.overview }}
+                        </p>
+                        <div class="buttons row">
+                            <button type="submit" class="col btn btn-transparent" data-placement="top" data-toggle="top" title="Play Movie"><i class="fas fa-play"></i></button>
+                            <button type="submit" class="col btn btn-transparent" data-placement="top" data-toggle="top" title="Add to List"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                             </a>
+
+                </div>
+                {% endfor %}
+                <div class="item text-center row-item">
+
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+    </div>
+
+{% if page_obj.has_next %}
+<a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+{% else %}
+
+{% endif %}
+<div class="d-flex justify-content-center" style="display:none;">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+
+    {% endblock %}
+
+
+
+
+    {% block add_js %}
+    <!-- Owl JS -->
+    <script src="{% static 'movie/owlcarousel/owl.carousel.js' %}"></script>
+
+    <!-- Youtube Iframe Player API -->
+    <!-- <script src="https://www.youtube.com/iframe_api"></script> -->
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="{% static 'home/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'home/js/infinite.min.js' %}"></script>
+        <script src="{% static 'home/js/home_tv.js'%}"></script>
+        <!-- Tablet JS -->
+        <script src="{% static 'home/js/home_tablet.js' %}"></script>
+
+
+    <script>
+        let infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+            handler: function(direction){
+    //            alert(direction)
+            },
+            offset: 'bottom-in-view',
+            onBeforePageLoad: function () {
+              $('.spinner-border').show();
+              $('.rows').owlCarousel(forRows)
+            },
+            onAfterPageLoad: function () {
+              $('.spinner-border').hide();
+              $('.rows').owlCarousel(forRows);
+                {% if is_tablet %}
+                    alert('Removing')
+                    removeHoverOfRowItem()
+                {% else %}
+                    reloadTooltip()
+                {% endif %}
+                Waypoint.refreshAll()
+
+            }
+          });
+ 
+        
+        
+        </script>
+
+
+    {#    <script src="{% static 'vlitejs/dist/vlite/js/vlite.js' %}"></script>#}
+
+        <input type="hidden" id="isTablet" value="{{ is_tablet }}">
+    {% endblock %}
+
+    {% block add_css %}
+    <!-- Owl CSS -->
+    <link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.carousel.min.css'%}">
+    <link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.theme.default.min.css'%}">
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'home/css/home_tv.css'%}">
+        {% if is_tablet %}
+        <!-- Tablet CSS -->
+        <link rel="stylesheet" href="{% static 'home/css/home_tablet.css' %}">
+        {% endif %}
+
+
+    {#    <link rel="stylesheet" href="{% static 'vlitejs/dist/vlite/css/vlite.css' %}">#}
+    {% endblock %}

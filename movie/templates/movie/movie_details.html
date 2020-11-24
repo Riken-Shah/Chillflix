@@ -1,0 +1,353 @@
+{% extends 'home/base.html' %}
+{% load tv_templatetags %}
+{% load static %}
+{% load player_tags %}
+{% load tv_templatetags %}
+{{ item }}
+{% block title %} {% firstof item.title item.name %} {% endblock %}
+
+{% block content %}
+
+    {% if item.backdrop_path %}
+        {% set 'https://image.tmdb.org/t/p/w1280'|add:item.backdrop_path as backdrop_path %}
+
+              {% elif item.poster_path %}
+    {% set 'https://data.whicdn.com/images/59263398/original.jpg' as backdrop_path %}
+                <style>
+        #main-backdrop{
+            opacity: .12;
+        }
+        </style>
+
+        {% else %}
+    {% set 'https://data.whicdn.com/images/59263398/original.jpg' as backdrop_path %}
+
+
+    {% endif %}
+
+
+
+
+
+{% if type == 'tv' %}
+<!-- Valid All Season -->
+{% get_all_season item.seasons as seasons%}
+{% set item.episode_run_time.0 as runtime %}
+{% set item.first_air_date as year %}
+{% get_certification_tv item.content_ratings as certification %}
+
+{% set 30 as max_overview_word %}
+{% set 'Creators' as creators_name %}
+{% set item.created_by as creators %}
+{% set item.credits as credits %}
+{% set item.similar.results as similar_items %}
+
+
+<style rel="stylesheet">
+    .small-info-box {
+        min-width: max-content;
+    }
+</style>
+{% else %}
+
+{% set item.runtime as runtime %}
+{% set item.release_date as year %}
+{% get_certification_movie item.releases as certification %}
+{% set 13 as max_overview_word %}
+{% set 'Directors' as creators_name %}
+{#{% get_movie_credits item.tmdb_id as credits%}#}
+{% set item.credits as credits%}
+
+{% get_director credits.crew as creators %}
+{#{% get_similar_movies item.tmdb_id as similar_items %}#}
+{% set item.similar.results as similar_items %}
+{% endif %}
+<div class="container-fluid">
+    <div class="main-content row">
+        <!-- Backdrop Image -->
+        <div class="backdrop-img col">
+            <img class="left-fit" id="main-backdrop" src="{{ backdrop_path }}" alt="">
+            {% if not item.backdrop_path and item.poster_path %}
+                <img style="justify-self: center;max-width: 45vh;height: auto;position: absolute;z-index: 1;max-height: 80%;" src="https://image.tmdb.org/t/p/w500{{ item.poster_path }}" alt="">
+            {% endif %}
+        </div>
+        <!-- Backdrop Image Content -->
+        <div class="content-row col">
+            <div class="content">
+                <!-- Title -->
+                <div class="title mr-3 float-right">
+                    <h1 style="font-size: 230%">{% firstof item.title item.name %}</h1>
+                </div>
+                <!-- List of Items -->
+                <div class="d-flex text-center mt-3 float-right">
+                    <!-- Runtime -->
+                    <div class="mr-3 p-2 bg-danger small-info-box">{% get_hr_min_format runtime %}</div>
+                    {% if certification %}
+                        <!-- Certification -->
+                        <div class="mr-3 p-2 bg-danger small-info-box">{% firstof certification.certification certification.rating %}</div>
+                    {% endif %}
+
+                    <!-- Year -->
+                    <div class="mr-3 p-2 bg-danger small-info-box">{% firstof certification.release_date|date_fix year|date_fix %}</div>
+                    {% if type == 'tv' %}
+                    <!-- Total Seasons -->
+                    <div class="mr-3 p-2 bg-danger small-info-box">Seasons {{ seasons|length }}</div>
+                    {% endif %}
+                    <!-- Rating -->
+                    <div class="mr-3 p-2 bg-danger small-info-box">{{ item.vote_average }}
+                        <i class="fa fa-star" aria-hidden="true" style="margin-left: 3px"></i>
+                    </div>
+                </div>
+                {% if type == 'movie' %}
+                <!-- Tagline -->
+                <div class="d-inline-flex text-right mt-5 mr-3 float-right">
+                    <h5 class="font-italic font-weight-light"> {{ item.tagline }} </h5>
+                </div>
+                {% endif %}
+                <!-- Overview -->
+                <div class="overview-container">
+                    {% turnc_word item.overview max_overview_word as overview %}
+                    <div class="d-inline-flex text-left mt-4 overview">
+                        <p class="text-justify" style="font-weight: 200;color: white;"> {{ overview.first }} <a
+                                class="last" style="display: none;">{{ overview.last }} </a> </p>
+                    </div>
+                </div>
+
+                <div class="below-div" style="position:relative;">
+                    <!-- List of Action -->
+                    <div class="d-flex text-center mt-4 float-right actions">
+                        <!-- Watch Movie -->
+                        <div class="mr-3 p-2 bg-danger small-info-button">
+                            <a class="">WATCH MOVIE</a>
+                            <i class="fa fa-play-circle" style="padding-left: 5px;font-size: calc(100% + 8px)"></i>
+                        </div>
+                        <!-- Watch Trailer -->
+                        <div class="mr-3 p-2 bg-transparent border border-danger small-info-button">
+                            <a class="">WATCH TRAILER</a>
+                            <i class="fa fa-play" aria-hidden="true" style="padding-left: 5px"></i>
+                        </div>
+                        <!-- Add to List -->
+                        <div class="mr-3 p-1 bg-transparent border-danger rounded-circle" style="border: solid 2px red">
+                            <button class="bg-transparent border-0">
+                                <i class="fa fa-plus" aria-hidden="true"
+                                    style="color: white;font-size: calc(100% + .4vh)"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="extras mr-3 mt-5 float-left" style="max-width: 80%;margin-left: 4em">
+                        <!-- Director -->
+                        <div>
+                            <div class="">
+                                <span style="background: #232323;padding-left: 0!important;" class="p-2 small-info-box">
+                                    <span class="bg-danger p-2 small-info-box">{{ creators_name }}</span>
+                                    <span class="pl-2">
+                                        {% for director in creators|slice:2 %} {{ director.name }}, {% endfor %}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Genres -->
+                        <div>
+                            <div class="mt-4">
+                                <span style="background: #232323;padding-left: 0!important;" class="p-2 small-info-box">
+                                    <span class="bg-danger p-2 small-info-box">Genres</span>
+                                    <span class="pl-2">
+                                        {% for genre in item.genres|slice:2 %} {{ genre.name }}, {% endfor %}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Language -->
+                        <div>
+                            <div class="mt-4">
+                                <span style="background: #232323;padding-left: 0!important;" class="p-2 small-info-box">
+                                    <span class="bg-danger p-2 small-info-box">Language</span>
+                                    <span class="pl-2">
+                                        {{ item.original_language }}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="second-content">
+
+        {% if type == 'tv' %}
+        <!-- Episodes Info -->
+        {% get_episodes item.id main_season as episodes %}
+        <div class="episodes-info" style="margin-top: 2em;">
+            <!-- Seasons Btn -->
+            <h2>Episodes</h2>
+            {% if seasons|length > 1 %}
+                <div>
+            <button class="btn btn-dark dropdown-toggle" type="button" id="seasonDropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Season</button>
+            <div class="dropdown-menu" aria-labelledby="seasonDropdownMenuButton" style="background: #1d2124">
+                {% for s in seasons %}
+                <a class="dropdown-item" href="./{{ s.season_number }}"
+                    style="font-size: 1.3em;padding: .2em .5em .2em .5em;background: #1d2124;color: white">Season
+                    {{ s.season_number }}</a>
+                <div class="dropdown-divider"></div>
+                {% endfor %}
+                                </div>
+
+            </div>
+            {% endif %}
+
+            {% for epi in episodes.episodes %}
+                            {% if epi.still_path %}
+        {% if not first_pp %}
+            {% set  'https://image.tmdb.org/t/p/w185'|add:epi.still_path as first_pp %}
+        {% endif %}
+        {% set 'https://image.tmdb.org/t/p/w185'|add:epi.still_path as still_path %}
+        {% elif first_pp %}
+        {% set first_pp as still_path %}
+        {% else %}
+        {% set 'https://image.tmdb.org/t/p/w185'|add:item.backdrop_path as still_path %}
+    {% endif %}
+
+            <!-- Epi Card -->
+            <div id="epi-card" class="card flex-row flex-wrap">
+                <!-- Epi Image -->
+                <div class="card-header border-0" style="margin-bottom: 0;">
+                    <img src="{{ still_path }}" alt="">
+                </div>
+                <div class="card-block ml-2 row" style="">
+                    <div class="col" style="max-width: 85%;padding-left: 0;">
+                        <!-- Epi Title -->
+                        <h5 style="margin-bottom: 0;" class="card-title">{{ epi.episode_number }}. {{ epi.name }}</h5>
+                        <br>
+                    {% if epi.overview %}
+                        <!-- Epi Overview -->
+                        {% turnc_word epi.overview 35 as overview %}
+                        <p style="font-size: 100%;" class="card-text">{{ overview.first }}
+                            {% if overview.last %}
+                            <a class="collapse" id="e-{{ epi.episode_number }}">{{ overview.last }}</a>
+                            <a class="more-info" style="color: dodgerblue" data-toggle="collapse" data-target="#e-{{ epi.episode_number }}" aria-expanded="false" aria-controls="e-{{ epi.episode_number }}">read more...</a>
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                    </div>
+                    <!-- Epi Extras -->
+                    <div class="col" style="min-width: 15%;max-width: 15%;position: absolute;right: -4%;">
+                        <!-- Epi Rating -->
+                        <div class="rating">
+                            {% resolve_rating epi.vote_average as ratings %}
+                            {% for i in ratings %}
+                            <span class="fa fa-star {{ i }}"></span>
+                            {% endfor %}
+
+                            <span style="color: #999996;padding-top: 1em;display: block"> {% date_fix epi.air_date %}</span>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Episodes Info ./-->
+
+        {% endif %}
+        <!-- Director/Created by Info -->
+        <div class="cast">
+            <h2>{{ creators_name }}</h2>
+{#        <h2>Crew</h2>#}
+            <div class="owl-carousel owl-theme">
+{#                {% crew_tuple credits.crew as crew %}#}
+            {% get_director credits.crew as crew%}
+                {% for director in crew %}
+                <div class="item text-center">
+                    {% if director.profile_path %}
+                    <img class="owl-lazy" style="border-radius: 15px"
+                        data-src="https://image.tmdb.org/t/p/w185{{ director.profile_path }}" alt="">
+                    {% else %}
+                    <img class="owl-lazy" data-src="https://artworks.thetvdb.com/person/actor.jpg" alt="">
+                    {% endif %}
+                    <span
+                        style="font-weight: 300;font-size: 1.2em;color: white;display: block;padding-top: 1em;">{{ director.name }} as {{ director.job }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <!-- Cast Info -->
+        <div class="cast">
+            <h2>Cast</h2>
+            <div class="owl-carousel owl-theme">
+                {% for cast in credits.cast|slice:15 %}
+                <div class="item text-center">
+                    {% if cast.profile_path %}
+                    <img class="owl-lazy" style="border-radius: 15px"
+                        data-src="https://image.tmdb.org/t/p/w185{{ cast.profile_path }}" alt="">
+                    {% else %}
+                    <img class="owl-lazy" data-src="https://artworks.thetvdb.com/person/actor.jpg" alt="">
+                    {% endif %}
+                    <span
+                        style="font-weight: 300;font-size: 1.2em;color: white;display: block;padding-top: 1em;">{{ cast.name }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Recomendation -->
+        <div class="cast">
+            <h2>More Like {% firstof item.title item.name %}</h2>
+            <div class="owl-carousel owl-theme">
+                {% for similar_item in similar_items %}
+                <div class="item text-center">
+                    {% if similar_item.poster_path %}
+                    <a href="/{{ type }}/{{ similar_item.id }}">
+                        <img class="owl-lazy" style="border-radius: 15px"
+                            data-src="https://image.tmdb.org/t/p/w342{{ similar_item.poster_path }}" alt="">
+                    </a>
+                    {% else %}
+                    <img class="owl-lazy" data-src="https://artworks.thetvdb.com/person/actor.jpg" alt="">
+                    {% endif %}
+                    <span
+                        style="font-weight: 300;font-size: 1.2em;color: white;display: block;padding-top: 1em;">{{ similar_item.title }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{#    {% if type == 'movies' %}#}
+{#        {% get_vidcloud_movie item.imdb_id as gdrive_link%}#}
+{#        {% else %}#}
+{#        {% get_gdrive_tv item.id main_season 1 as gdrive_link %}#}
+{#    {% endif %}#}
+{#    <iframe src="{{ gdrive_link }}" sandbox="allow-forms#}
+{#allow-pointer-lock#}
+{#allow-same-origin#}
+{#allow-scripts#}
+{#allow-top-navigation" allowfullscreen allowusermedia></iframe>#}
+{#    <iframe src="{{ gdrive_link.0 }}"></iframe>#}
+
+{#    {% include 'player/play_video.html' with content=item type=type %}#}
+{% endblock %}
+
+
+
+
+{% block add_css %}
+<!-- Owl CSS -->
+<link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.carousel.min.css'%}">
+<link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.theme.default.min.css'%}">
+
+<link rel="stylesheet" href="{% static 'movie/css/movie_details.css'%}">
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block add_js %}
+<!-- Owl JS -->
+<script src="{% static 'movie/owlcarousel/owl.carousel.js' %}"></script>
+<script src="{% static 'movie/js/movie_details.js' %}"></script>
+{% endblock %}

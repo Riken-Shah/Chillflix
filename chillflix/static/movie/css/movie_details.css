@@ -1,0 +1,147 @@
+body{
+    background: black;
+    color: white;
+}
+
+.main-content {
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(9,9,121,0) 50%, rgba(0,0,0,1) 75%);
+
+    /* To hide backdrop image */
+    overflow: hidden;
+
+}
+
+.small-info-box, .small-info-button{
+    border-radius: 20px;
+    /*min-width: 6em;*/
+    font-weight: 100;
+    font-size: 1em;
+    width: max-content;
+}
+
+.small-info-button{
+    min-width: 12em;
+}
+
+
+
+
+.content-row{
+    max-width: 30%;
+    color: white;
+}
+
+.content{
+    margin-top: 2em;
+}
+/* Backdrop Image Setting */
+.backdrop-img {
+    display: grid;
+    height: 100%;
+    align-items: center;
+    max-width: 70%;
+}
+.left-fit {
+    max-height: fit-content;
+    height: auto;
+    margin-left: -6vh;
+    z-index: -1;
+}
+
+.overview{
+    position: relative;
+    top: 31%;
+    margin-right: 1em;
+    /*-webkit-transition:all 0.1s ease-in-out;*/
+    z-index: 1;
+}
+.below-div{
+    z-index: 0;
+}
+.actions{
+    /*margin-top: 7em!important;*/
+}
+
+.overview:hover{
+    background: #232323;
+    transform: scale(1.1);
+    border-radius: 10px;
+    padding: .5em 1em .5em 1em;
+    /*-webkit-transition:all 0.1s ease-in-out;*/
+}
+.overview:hover p{
+    margin-bottom: 0;
+}
+.overview:hover .last{
+    display: inline!important;
+}
+
+
+
+
+.second-content{
+    margin-top: 2.5em;
+    margin-left: 1em;
+    overflow: hidden;
+}
+
+.second-content div{
+    /*margin-bottom: 1em;*/
+}
+.second-content div h2{
+    color: white;
+    margin-bottom: 1em;
+}
+
+
+
+.more-info{
+    cursor: pointer;
+}
+
+#epi-card{
+    background: #2a2a29;
+    border-radius: 12px;
+    margin-top: .5em;
+    font-weight: 300;
+}
+
+#epi-card .card-header{
+    max-width: 20%;
+}
+
+#epi-card img{
+    width: 100%;
+}
+
+#epi-card .card-block{
+     padding: .2em;
+     align-items: center;
+    padding-top: 1em;
+    /*padding-left: 1em;*/
+    max-width: 80%;
+    transition: all 0.1s ease-in-out;
+}
+
+#epi-card .card-title {
+    font-size: 160%;
+}
+
+
+.epi-overview{
+    font-weight: 200;
+    padding-right: 1em;
+    margin-bottom: .8em;
+}
+
+#seasonDropdownMenuButton {
+    font-size: 1.5em;
+    padding: .2em .5em .2em .5em;
+}
+
+.rating{
+    color: red;
+    /*font-size: 2.5vh;*/
+    font-size: 120%;
+}

@@ -1,0 +1,44 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% load home_tag %}
+
+{% block title %}Search {% endblock title %}
+
+
+{% block content %}
+
+<div class="container">
+<h1>{{ movie.title }}</h1>
+    {% csrf_token %}
+    <input type="text" value="{{ movie.soap_id }}" id="MId">
+    <h1 id="SoapLink"></h1>
+    <h2> Got the link{% get_soap_link movie %}</h2>
+<video
+ id="my-player"
+ class="video-js"
+ controls
+ preload="auto"
+ poster="https://image.tmdb.org/t/p/original{{ movie.backdrop_path }}"
+ data-setup='{}'>
+ <source id="main" src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></source>
+ <p class="vjs-no-js">
+ To view this video please enable JavaScript, and consider upgrading to a web browser that
+ <a href="http:https://videojs.com/html5-video-support/" target="_blank">
+ supports HTML5 video
+ </a>
+ </p>
+</video>
+<h1 id="error"></h1>
+</div>
+{% endblock content %}
+
+
+{% block add_js %}
+    <script src="{% static 'movie/js/player.js' %}"></script>
+     <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+<link href="https://vjs.zencdn.net/7.0/video-js.min.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/7.0/video.min.js"></script>
+{% endblock %}
+
+
+

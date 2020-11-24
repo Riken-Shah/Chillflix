@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <link rel="shortcut icon" href="{% static 'home/img/favicon.ico' %}" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- Title -->
+  <title>{% block title %}{% endblock %}</title>
+  <!-- Base CSS -->
+<!--  <link rel="stylesheet" href="/Volumes/Samsung USB/chillflix_moviesite/chillflix/home/static/home/base.css">-->
+  <link rel="stylesheet" href="{% static 'home/css/base.css' %}">
+  <!-- Extra CSS -->
+  {% block add_css %}
+  {% endblock %}
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@1,500&display=swap" rel="stylesheet">
+  {% block add_font %}
+  {% endblock %}
+</head>
+
+<body>
+  <!-- Just for Fullscreen Testing Purposes -->
+    <div class="Bg-Test">
+    <div id="Bg-Trailer" style="/* display: none;opacity: 0 */"></div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid" id="mainNav">
+      <a class="navbar-brand" href="/">
+        <img src="{% static 'home/img/chillflix.png' %}" class="d-inline-block align-top" alt="" height="50" style="" id="accountBtn2-brand-img">
+      </a>
+      <div style="display: inline-flex;">
+        <div class="dropdown navbar-toggler navbar-toggler-right border-0">
+          <a class="btn btn-outline-secondary dropdown-toggle text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="accountBtn2">
+            <span class="font-weight-bold" id="accountBtn2-user" style="font-family: 'Literata', serif;color: whitesmoke;">Riken</span>
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/1bdc9a33850498.56ba69ac2ba5b.png" alt="" style="max-height: 30px;">
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="min-width: 60px !important;">
+            <a class="dropdown-item" href="#">Login</a>
+            <a class="dropdown-item" href="#">Settings</a>
+          </div>
+        </div>
+        <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10" aria-expanded="true">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse justify-content-between" id="navbar10" style="">
+        <ul class="navbar-nav">
+          <li class="nav-item text-center{% if request.path == '/' %} active {% endif %}"> <a class="nav-link" href="/">Home</a> </li>
+          <li class="nav-item text-center{% if request.path == '/movie/' %} active {% endif %}"> <a class="nav-link" href="/movie">Movies</a></li>
+          <li class=" nav-item text-center{% if request.path == '/tv/' %} active {% endif %}"> <a class="nav-link" href="/tv">Shows</a> </li>
+          <li class="nav-item dropdown text-center{% if request.path == '/search/' %} active {% endif %}">
+            <a class="nav-link" href="/search" id="navbarDropdown"> Filter </a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+                    <form class="form-inline my-2 my-lg-0" method="get" action="/search">
+                        {% csrf_token %}
+                        <div class="dropdown">
+      <input class="form-control mr-sm-2 dropdown-toggle" type="search" id="search" name="query" placeholder="Search" aria-label="Search" type="button" id="searchDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="dropdown-menu bg-dark" id="search_result">
+{#                        <ul  class="dropdown-menu">#}
+                            <a href="/search" type="submit" style="display: none"></a>
+{#                        </ul>#}
+                            </div>
+                            </div>
+           </form>
+                    <li class="nav-item nav-right">
+            <div class="dropdown">
+              <a class="btn btn-outline-secondary dropdown-toggle ml-2 text-center" href="#" role="button" id="accountBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="font-weight-bold" style="font-family: 'Literata', serif;color: whitesmoke;">Riken</span>
+                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/1bdc9a33850498.56ba69ac2ba5b.png" alt="" style="max-height: 30px;">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">1st Options</a>
+                <a class="dropdown-item" href="#">Login</a>
+                <a class="dropdown-item" href="#">Settings</a>
+              </div>
+            </div>
+          </li>
+
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar Completed -->
+
+  <!-- Main Content  -->
+  {% block content %}
+
+
+  {% endblock %}
+
+      <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <script src="{% static 'home/js/base.js' %}"></script>
+  <script>
+    // If Device is Mobile
+    let width = $(window).width();
+    let height = $('window').height()
+    if (width < 768) {
+      console.log('Mobile');
+      document.getElementById('accountBtn').style.display = 'none';
+      document.getElementById('mainNav').className = 'container-fluid';
+      // If Phone is too small
+      // 321
+      if (width < 376) {
+        console.log('Very Small Mobile', width);
+        // Reduce the size of branding image `ChillFlix`
+        document.getElementById('accountBtn2-brand-img').width = "110";
+        // Remove the User Name
+        document.getElementById('accountBtn2-user').style.display = 'none'
+      }
+    }
+  </script>
+
+  <!-- Extra JS/JQUERY -->
+  {% block add_js %}
+  {% endblock %}
+
+</body>
+
+</html>
+
+
+

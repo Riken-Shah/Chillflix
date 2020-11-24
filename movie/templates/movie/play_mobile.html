@@ -1,0 +1,430 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% load player_tags %}
+{% load tv_templatetags %}
+
+{% block title %}
+{{ movie.title }}
+{% endblock %}
+{{ item }}
+{% block content %}
+
+{% if type == 'tv' %}
+<!-- Valid All Season -->
+{% get_all_season item.seasons as seasons%}
+{% set item.episode_run_time.0 as runtime %}
+{% set item.first_air_date as year %}
+{% get_certification_tv item.content_ratings as certification %}
+
+{% set 30 as max_overview_word %}
+{% set 'Creators' as creators_name %}
+{% set item.created_by as creators %}
+{% set item.credits as credits %}
+{% set item.similar.results as similar_items %}
+
+
+<style rel="stylesheet">
+    .small-info-box {
+        min-width: max-content;
+    }
+</style>
+{% else %}
+
+{% set item.runtime as runtime %}
+{% set item.release_date as year %}
+{% get_certification_movie item.releases as certification %}
+{% set 13 as max_overview_word %}
+{% set 'Directors' as creators_name %}
+{#{% get_movie_credits item.tmdb_id as credits%}#}
+{% set item.credits as credits%}
+
+{% get_director credits.crew as creators %}
+{#{% get_similar_movies item.tmdb_id as similar_items %}#}
+{% set item.similar.results as similar_items %}
+{% endif %}
+
+
+
+
+<!-- Bottom Navbar for Mobile -->
+<nav id="bottom-navbar" class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+    <div class="nav-item">
+        <span class="fa-stack fa-1x" style="padding-left: 1.2em;">
+            <i class="fa fa-home" aria-hidden="true"></i>
+        </span>
+        <a class="nav-link text-center" href="#">Home</a>
+    </div>
+    <div class="nav-item">
+        <div class="nav-icon">
+            <img width="40%" src="https://img.icons8.com/pastel-glyph/90/FFFFFF/cinema-.png" alt="" />
+        </div>
+        <a class="nav-item nav-link text-center" href="#">Movies</a>
+    </div>
+    <div class="nav-item">
+        <div class="nav-icon">
+            <img alt="" width="40%" style="padding-bottom: 1px"
+                src="https://img.icons8.com/ios-filled/90/FFFFFF/retro-tv.png" />
+        </div>
+        <a class="nav-item nav-link text-center" href="#">Shows</a>
+    </div>
+    <div class="nav-item" id="mylist">
+        <div class="nav-icon">
+            <img alt="" width="40%" style="padding-bottom: 1px"
+                src="https://img.icons8.com/ios-filled/90/FFFFFF/retro-tv.png" />
+        </div>
+
+        <a class="nav-link text-center" href="#">My List</a>
+    </div>
+
+</nav>
+<!-- End of Bottom Navbar for Mobile -->
+<div class="main-content">
+          {% if item.backdrop_path %}
+        {% set 'https://image.tmdb.org/t/p/w780'|add:item.backdrop_path as backdrop_path %}
+              {% elif item.poster_path %}
+        {% set 'https://image.tmdb.org/t/p/w780'|add:item.poster_path as backdrop_path %}
+        {% else %}
+    {% set 'https://data.whicdn.com/images/59263398/original.jpg' as backdrop_path %}
+    {% endif %}
+    <div id="main-card" class="card border-0">
+        <div id="background" style="background: rgb(0,0,0);
+                    background: linear-gradient(90deg, rgba(0,0,0,1) 5%, rgba(6,6,6,1) 19%, rgba(35,35,35,1) 29%, rgba(255,255,255,0) 100%), url('{{ backdrop_path }}');
+                    display: none;">
+        </div>
+        <div class="for-landscape row" style="display: none">
+            <div id="landscape-info" class="col" style="">
+                <div class="details-movie-landscape">
+
+                    <div class="play-button"
+                        style="display: table-cell;padding-left: 1em;width: 6.5em;text-align-last: center;">
+                        <button type="button" data-toggle="modal" data-target="#video_player">
+                        <img style="max-width: 70%" src="{% static 'movie/img/play_button.png'%}" alt="Play Button" />
+                        </button>
+
+                    </div>
+                    <div class="mytitle" style="display: table-cell;padding-left: 1em">
+                        <h1 class="text-center" style="font-size: 9vh;font-weight: 500">
+                            {% firstof item.title item.name %}
+                        </h1>
+                    </div>
+                    <div class="movie-li-item-landscape">
+                        <ul class="list-inline">
+                            <!-- Add Total Seasons -->
+                        {% if type == 'tv' %}
+                        <li class="list-inline-item" style="align-self: center;">Seasons {{ seasons|length }}</li>
+                        <li class="list-inline-item" style="align-self: center;">
+                            <div class="dot"></div>
+                            </li>
+                        {% endif %}
+                            <!-- Run For Genres -->
+                            <li class="list-inline-item text-center">{{ item.genres.0.name }}</li>
+                            <li class="list-inline-item text-center" style="align-self: center;">
+                                <div class="dot"></div>
+                            </li>
+                        {% if type == 'movie' %}
+                            <!-- Add Runtime -->
+                            <li class="list-inline-item">{% get_hr_min_format item.runtime %}</li>
+                            <li class="list-inline-item" style="align-self: center;">
+                                <div class="dot"></div>
+                            </li>
+                        {% endif %}
+                            <!-- Add  Certification -->
+                            {% if certification  %}
+                            <li class="list-inline-item certification" style="align-self: center;">
+                                {% firstof certification.certification certification.rating %}
+                            </li>
+                            <li class="list-inline-item" style="align-self: center;">
+                                <div class="dot"></div>
+                            </li>
+                            {% endif %}
+                            <!-- Add Year -->
+                            <li class="list-inline-item" style="align-self: center;"> {{ year|date_fix }}
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Add Tagline -->
+                    <div class="tagline tagline-landscape text-center">
+                        <span>{{ item.tagline }}</span>
+                    </div>
+                    <div class="all-buttons" style="padding-top: 1em;padding-bottom: 1.5em">
+                        <div class="trailer" style="display: table-cell;">
+                            <button id="trailer-btn">
+                                <img class="img-fluid" style="width: 18%;height: auto;"
+                                    src="https://img.icons8.com/android/100/FFFFFF/play.png" />
+                                <span style="padding-left: 1em;font-weight: initial;padding-right: 1em;">
+                                    Play Trailer</span>
+                            </button>
+                        </div>
+                        <div class="add-list" style="display: table-cell;">
+                            <button class="add-btn">
+                                <img width="60%" alt=""
+                                    src="https://img.icons8.com/material/50/FFFFFF/plus-math--v2.png" />
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div id='poster' class="poster-image-landscape col" style="">
+                {% if item.poster_path or item.backdrop_path %}
+                <img id='secondImg' class="card-img-top border-0" style="z-index: 1"
+                    src="https://image.tmdb.org/t/p/w780{{ item.poster_path }}" alt="Card image cap"
+                    >
+                {% endif %}
+            </div>
+        </div>
+        <img id="blockLandscape" class="card-img-top border-0" style="z-index:-1"
+            src="{{ backdrop_path }}" alt="Card image cap">
+
+
+    </div>
+<div id="after-overivew">
+    <div id="potraitContent">
+        <div class="card-body" style="padding: 0">
+            <div style="display: table">
+                <div class="play-button" style="display: table-cell;padding-left: 1em">
+                    <button type="button" data-toggle="modal" data-target="#video_player">
+                    <img src="{% static 'movie/img/play_button.png'%}" alt="Play Button" />
+                        </button>
+                </div>
+                <div class="mytitle" style="display: table-cell;padding-left: 1em">
+                    <h1 class="text-center">
+                        {% firstof item.title item.name %}
+                    </h1>
+                </div>
+            </div>
+            <div class="movie-li-item">
+                        <ul class="list-inline">
+                            <!-- Add Total Seasons -->
+                        {% if type == 'tv' %}
+                        <li class="list-inline-item" style="align-self: center;">Seasons {{ seasons|length }}</li>
+                        <li class="list-inline-item" style="align-self: center;">
+                            <div class="dot"></div>
+                            </li>
+                        {% endif %}
+                            <!-- Run For Genres -->
+                            <li class="list-inline-item text-center">{{ item.genres.0.name }}</li>
+                            <li class="list-inline-item text-center" style="align-self: center;">
+                                <div class="dot"></div>
+                            </li>
+                        {% if type == 'movie' %}
+                            <!-- Add Runtime -->
+                            <li class="list-inline-item">{% get_hr_min_format item.runtime %}</li>
+                            <li class="list-inline-item" style="align-self: center;">
+                                <div class="dot"></div>
+                            </li>
+                        {% endif %}
+                            <!-- Add  Certification -->
+                            {% if certification  %}
+                            <li class="list-inline-item certification" style="align-self: center;">
+                                {% firstof certification.certification certification.rating %}
+                            </li>
+                            <li class="list-inline-item" style="align-self: center;">
+                                <div class="dot"></div>
+                            </li>
+                            {% endif %}
+                            <!-- Add Year -->
+                            <li class="list-inline-item" style="align-self: center;"> {{ year|date_fix }}
+                            </li>
+                        </ul>
+            </div>
+            <!-- Add Buttons -->
+            <div class="all-buttons">
+                <div class="trailer" style="display: table-cell;">
+                    <button id="trailer-btn">
+                        <img class="img-fluid" style="width: 18%;height: auto;"
+                            src="https://img.icons8.com/android/100/FFFFFF/play.png" />
+                        <span style="padding-left: 1em;font-weight: initial;padding-right: 1em;">
+                            Play Trailer</span>
+                    </button>
+                </div>
+                <div class="add-list" style="display: table-cell;">
+                    <button class="add-btn">
+                        <img width="60%" alt="" src="https://img.icons8.com/material/50/FFFFFF/plus-math--v2.png" />
+                    </button>
+                </div>
+            </div>
+            <!-- Add Tagline -->
+            <div class="tagline text-center">
+                <span>{{ item.tagline }}</span>
+            </div>
+        </div>
+     </div>
+        <!-- Add Overview -->
+        <div class="overview-container">
+            <h2>Overview
+                <div class="rating">
+                    {% resolve_rating item.vote_average as ratings %}
+                    {% for i in ratings %}
+                    <span class="fa fa-star {{ i }}"></span>
+                    {% endfor %}
+                </div>
+            </h2>
+            {% fix_overview item.overview 30 as overview %}
+            <p class="text-justify">
+                {{ overview.overview }}
+                {% if overview.add_info %}
+                <span class="collapse" id="overview" style="color: red">{{ overview.reaming_text }}</span>
+                <a id="overview-more-info" data-toggle="collapse" href="#overview" role="button" aria-expanded="false"
+                    aria-controls="overview">more info...</a>
+                {% endif %}
+            </p>
+        </div>
+
+
+
+
+{% if type == 'tv' %}
+    <!-- Episodes Info -->
+{% get_episodes item.id main_season as episodes %}
+<div class="episodes-info" style="margin-top: 2em;">
+{% if seasons|length > 1 %}
+    <button class="btn btn-dark dropdown-toggle" type="button" id="seasonDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Season</button>
+     <div class="dropdown-menu" aria-labelledby="seasonDropdownMenuButton" style="background: #1d2124">
+         {% for s in seasons %}
+    <a class="dropdown-item" href="./{{ s.season_number }}" style="font-size: 1.3em;padding: .2em .5em .2em .5em;background: #1d2124;color: white">Season {{ s.season_number }}</a>
+             <div class="dropdown-divider"></div>
+         {% endfor %}
+    </div>
+{% endif %}
+{% for epi in episodes.episodes %}
+    <div id="epi-card" class="card flex-row flex-wrap">
+    {% if epi.still_path %}
+        {% if not first_pp %}
+            {% set  'https://image.tmdb.org/t/p/w185'|add:epi.still_path as first_pp %}
+        {% endif %}
+        {% set 'https://image.tmdb.org/t/p/w185'|add:epi.still_path as still_path %}
+        {% elif first_pp %}
+        {% set first_pp as still_path %}
+        {% else %}
+        {% set 'https://image.tmdb.org/t/p/w185'|add:item.backdrop_path as still_path %}
+    {% endif %}
+    {% if still_path %}
+        <div class="card-header border-0">
+            <img src="{{ still_path }}" alt="">
+        </div>
+        {% else %}
+    {% endif %}
+        <div class="card-block px-2 row" {% if not still_path %} style="margin-left: .1em;min-width: 100% !important;" {% endif %}>
+            <div class="col" style="max-width: 85%;">
+                {% turnc_word  epi.name 3  as name %}
+            <h5  style="margin-bottom: 0;" class="card-title">{{ epi.episode_number }}. {{ name.first }}</h5>
+                {% if name.last %}
+                <a  class="collapse" id="epi-{{ epi.episode_number }}-title">
+                <h5 class="card-title">{{ name.last }}</h5>
+                </a>
+                {% endif %}
+                </div>
+            {% if epi.overview or name.last %}
+            <div class="colSM">
+                <a class="epi-expand-btn" data-toggle="collapse" href="#epi-{{ epi.episode_number }}{% if name.last %},#epi-{{ epi.episode_number }}-title{% endif %}" role="button" aria-expanded="false" aria-controls="epi-{{ epi.episode_number }} epi-{{ epi.episode_number }}-title" style="font-size: 2.8em;color: red;">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="collapse" id="epi-{{ epi.episode_number }}">
+            <div class="epi-overview">
+                <p class="card-text">{{ epi.overview }}</p>
+                </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+<!-- Episodes Info ./-->
+
+
+{% endif %}
+
+
+    <!-- Set up your HTML -->
+    {% set item.credits as credits %}
+    <div class="directors">
+{#        {% get_director credits.crew as directors%}#}
+        <h2> {{ creators_name }}{% if creators.count == 1%}s{% endif %}</h2>
+        <div class="owl-carousel owl-theme">
+            {% for director in creators %}
+            <div class="item text-center">
+                {% if director.profile_path %}
+                <img class="owl-lazy" data-src="https://image.tmdb.org/t/p/w185{{ director.profile_path }}" alt="">
+                {% else %}
+                <img class="owl-lazy" data-src="https://artworks.thetvdb.com/person/actor.jpg" alt="">
+                {% endif %}
+                <span style="font-weight: 300;font-size: 1.2em;color: white;">{{ director.name }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="cast">
+        <h2>Cast</h2>
+        <div class="owl-carousel owl-theme">
+            {% for cast in credits.cast|slice:15 %}
+            <div class="item text-center">
+                {% if cast.profile_path %}
+                <img class="owl-lazy" data-src="https://image.tmdb.org/t/p/w185{{ cast.profile_path }}" alt="">
+                {% else %}
+                <img class="owl-lazy" data-src="https://artworks.thetvdb.com/person/actor.jpg" alt="">
+                {% endif %}
+                <span style="font-weight: 300;font-size: 1.2em;color: white;">{{ cast.name }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="cast">
+        <h2>More Like {{ item.title|truncatechars:20 }}</h2>
+        {% set item.similar.results as similar_movies %}
+
+{#        {{ similar_movies }}#}
+        <div class="owl-carousel owl-theme">
+            {% for item in  similar_movies %}
+                            {% if item.poster_path %}
+
+            <div class="item text-center">
+            <a href="../{{ item.id }}">
+                <img class="owl-lazy" data-src="https://image.tmdb.org/t/p/w185{{ item.poster_path }}" alt="">
+                </a>
+                <span style="font-weight: 300;font-size: 1.2em;color: white;line-break: anywhere">
+                    {% firstof item.title item.name %}
+                </span>
+            </div>
+                            {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+{#{% include 'player/play_video.html' with content=movie type='movie' %}#}
+
+</div>
+    </div>
+
+{% endblock %}
+
+{% block add_css %}
+<link rel="stylesheet" href="{% static 'movie/css/mobile_play.css'%}">
+<link rel="stylesheet" href="{% static 'tv/css/mobile_player.css'%}">
+
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Font Phone Not Zoom -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<!-- Owl CSS -->
+<link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.carousel.min.css'%}">
+<link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.theme.default.min.css'%}">
+{% endblock %}
+
+{% block add_js %}
+<!-- Color Thief -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+
+<!-- Owl JS -->
+<script src="{% static 'movie/owlcarousel/owl.carousel.js' %}"></script>
+<script src="{% static 'movie/js/mobile_player.js' %}"></script>
+<script src="{% static 'tv/js/mobile_player.js' %}"></script>
+
+{% endblock %}

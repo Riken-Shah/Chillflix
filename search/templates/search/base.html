@@ -1,0 +1,208 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% load tv_templatetags %}
+{% load player_tags %}
+{% block title %}
+    Search Results for {%  firstof request.GET.query %}
+{% endblock %}
+
+
+{% block content %}
+<div id="wrapper" class="toggled">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <form id="filterForm">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Filter
+                    </a>
+                        <i class="fa fa-times cross" aria-hidden="true"></i>
+
+                </li>
+                <li class="type-selector">
+                    <div class="row">
+                        <span name="movie" class="col is-selected" id="movie">Movie</span>
+                        <span name="tv" class="col" id="tv">TV</span>
+                    </div>
+                </li>
+                <li>
+                    <span class="heading">Genres</span>
+                    {% get_all_genres as genres %}
+                    <div class="genres-container row" id="allGenres">
+                        {% for genre in genres %}
+                        {% if forloop.counter0 == 8 %}
+                        <div class="collapse row" id="Genres">
+                            {% endif %}
+                            <div class="{{ genre.type }} genre-box-container" id="{{ genre.id }}">
+                                <div class="genre-box col"
+                                    style='background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(130,130,130,0.4) 100%), url("https://image.tmdb.org/t/p/w154{{ genre.backdrop_path }}") no-repeat center'>
+                                    <span class="">{{ genre.name }}</span>
+                                </div>
+                                <div class="checked">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a id="moreGenres" style="text-align: center" data-toggle="collapse" href="#Genres" role="button"
+                        aria-expanded="false" aria-controls="Genres">
+                        <i id="GenresCol" class="fa fa-angle-down" aria-hidden="true"></i>
+                    </a>
+
+                </li>
+                <li class="movie">
+                    <span class="heading">Release Year</span>
+                    <div class="releaseDate">
+                        <div class="to row">
+                            <label for="startFrom" class="col-sm-3">From:</label>
+                            <input name="primary_release_date_gte" class="" value="2019" type="number" min="1900" max="2020" step="1"
+                                 id="startFrom">
+                        </div>
+                        <div class="row">
+                            <label for="endTill" class="col-sm-3">To:</label>
+                            <input name="primary_release_date_lte" class="" type="number" min="1900" max="2020" step="1"
+                                value="2020" id="endTill">
+                        </div>
+                    </div>
+                </li>
+                <li class="tv">
+                    <span class="heading">Air Dates</span>
+                    <div class="releaseDate">
+                        <div class="to row">
+                            <label for="epi_start_year" class="col-sm-3">From:</label>
+                            <input name="first_air_date_gte" class="col" value="2000" type="number" min="1900" max="2020" step="1"
+                                 id="epi_start_year">
+                        </div>
+                        <div class="row">
+                            <label for="epi_end_year" class="col-sm-3">To:</label>
+                            <input class="col"name="first_air_date_lte" value="2020" class="" type="number" min="1900" max="2020" step="1"
+                                id="epi_end_year" placeholder="Any year 2002">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <span class="heading">Min User Score</span>
+                    <div class="userScore row releaseDate">
+                        <input name="vote_count_gte" id="rating" class="rating" value="7" type="range" min="1" max="10" step="1">
+                        <input id="minScore" class="col-sm-3 liveScore" type="number" disabled>
+                    </div>
+                </li>
+                <li>
+                    <span class="heading">Max User Score</span>
+                    <div class="userScore row releaseDate">
+                        <label for="rating"></label><input name="vote_count_lte" id="rating" class="rating" type="range"
+                            min="1" max="10" step="1" value="10" >
+                        <label for=""></label><input id="maxScore" class="col-sm-3 liveScore" type="number" disabled>
+                    </div>
+                </li>
+                <li class="country movie">
+                    {% get_all_country as countries %}
+                    <span class="heading">Country</span>
+                    <div class="selecting">
+                        <select class="browser-default custom-select" name="region">
+                            <option selected>Open this to select country</option>
+                            {% for country in countries %}
+                            <option value="{{ country.iso_3166_1 }}" {% if country.iso_3166_1 == 'US' %}selected{% endif %}>{{ country.english_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </li>
+                <li class="langs">
+                    {% get_all_languages as langs %}
+                    <span class="heading">Language</span>
+                    <div class="selecting">
+                        <select class="browser-default custom-select" name="language">
+                            <option selected>Open this to select language</option>
+                            {% for lang in langs %}
+                            <option value="{{ lang.iso_639_1 }}" {% if lang.iso_639_1 == 'en' %}selected{% endif %}>{{ lang.english_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </li>
+                <li class="movie">
+                    <span class="heading">Age Group</span>
+                    <div class="age-grp row">
+                        <span class="col">Children</span>
+                        <span class="col">Adult</span>
+                    </div>
+                <li>
+                    <div class="submitBtn">
+                        <input value="Submit" class="btn btn-outline-light col-sm-7" type="submit" step="">
+                    </div>
+                </li>
+            </ul>
+        <input type="hidden" id="genres" name="with_genres">
+        <input type="hidden" id="type" name="type" value="movie">
+        <input type="hidden" id="certification" value="" name="certification">
+        <input type="hidden" name="discover" value="True">
+        </form>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div id="toogler">
+            <button id="menu-toggle" class="btn btn-secondary"><i id="toggleIcon" class="fa fa-angle-double-down"></i>
+                Toggle Menu <i class="fa fa-filter"></i></button>
+        </div>
+
+        {% block r_content %}
+            {% csrf_token %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block add_js %}
+<!-- Owl JS -->
+<script src="{% static 'movie/owlcarousel/owl.carousel.js' %}"></script>
+
+<!-- Youtube Iframe Player API -->
+<!-- <script src="https://www.youtube.com/iframe_api"></script> -->
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="{% static 'home/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'home/js/infinite.min.js' %}"></script>
+<script src="{% static 'search/js/base.js' %}"></script>
+<script src="{% static 'search/js/api/filter.js' %}"></script>
+
+<script>
+    var waypoint = new Waypoint({
+        element: document.getElementById('i-c'),
+        handler: function (direction) {
+            if (reqr_page < {{ page_obj.paginator.count }}) {
+                {% if request.GET.discover %}
+                    sendReq(null, page=reqr_page.toString(), {
+                        'discover': true,
+                        {% for k, v in request.GET.items %}
+                            "{{ k }}":"{{ v }}" {% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    })
+                {% else %}
+                sendReq('{{ request.GET.query }}', reqr_page.toString())
+                {% endif %}
+                Waypoint.refreshAll()
+            }
+        },
+    offset: 'bottom-in-view',
+    })
+</script>
+{% block xtra_js %}
+{% endblock %}
+{% endblock %}
+
+
+{% block add_css %}
+<!-- Owl CSS -->
+<link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.carousel.min.css'%}">
+<link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.theme.default.min.css'%}">
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Base CSS -->
+<link rel="stylesheet" href="{% static 'search/css/base.css' %}">
+{% block xtra_css %}
+{% endblock %}
+{% endblock %}
+
+{# TODO: 1) Add Gradient in Genre 2) Make Responsive 3) Type Selector #}

@@ -1,0 +1,513 @@
+.navbar {
+    background-color: #343a40!important;
+}
+/* Sidebar Nav */
+/*!
+ * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT
+
+(https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
+ */
+
+#menu-toggle{
+color:white;
+/*position: absolute;*/
+/*top: 46px;*/
+    position: fixed;
+    top: 50%;
+/*left: -45.75px;*/
+/*    left: -2%;*/
+transform: rotate(90deg);
+background: black;
+    z-index: 1;
+}
+
+
+
+#wrapper {
+  padding-left: 250px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+  padding-left: 0px;
+}
+
+
+#sidebar-wrapper {
+
+
+		    position: fixed;
+            top: 76px;
+    height: calc(100% - 76px);
+
+                    left: 250px;
+
+                    width: 350px;
+
+                    /*height: 86.5%;*/
+
+                    margin-left: -250px;
+
+                    overflow-y: scroll;
+
+  		    overflow-x: hidden;
+                    background: #1d1d1d;
+    color: white;
+
+		    -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+
+}
+
+
+#wrapper.toggled #sidebar-wrapper {width: 0px;
+}
+
+#toogler{
+    position: absolute;
+    left: -40px;
+}
+
+#page-content-wrapper {
+  width: auto;
+  position: absolute;
+    z-index: -1;
+    margin-top: 75px;
+  /*padding: 50px;*/
+  /*  padding-left: 50px;*/
+}
+
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+  width:100%;
+}
+
+
+
+
+/* Sidebar Styles */
+
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 350px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+.sidebar-nav li {
+  /*text-indent: 20px;*/
+  line-height: 40px;
+  margin-top: 2vh;
+}
+
+
+.sidebar-nav li a {
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+
+.sidebar-nav li a:hover {
+  text-decoration: none;
+  color: black;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+
+.sidebar-nav>.sidebar-brand {
+  /*height: 65px;*/
+  height: 1.5em;
+  /*font-size: 18px;*/
+    font-size: 2.5em;
+  /*line-height: 60px;*/
+  line-height: 1.5em;
+    position: relative;
+}
+
+.sidebar-nav>.sidebar-brand a {
+  color: white;
+    font-size: 45px;
+    text-align: center;
+}
+
+
+.sidebar-nav>.sidebar-brand a:hover {
+  /*color: red;*/
+    color: inherit;
+  background: none;
+}
+
+
+/**
+
+@media(min-width:768px) {
+
+#wrapper {
+    padding-left: 0;
+  }
+
+#wrapper.toggled {
+    padding-left: 0px;
+  }
+
+#sidebar-wrapper {
+    width: 250px;
+  }
+
+#wrapper.toggled
+#sidebar-wrapper {
+    width: 250px;
+  }
+
+#page-content-wrapper {
+    padding-left: 50px;
+    position: relative;
+  }
+
+#wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+ padding-left: 35px; }
+
+}
+
+**/
+
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+/* ./Sidebar*/
+
+
+/* Inside Sidebar Content */
+.type-selector{
+    /*border: solid 1px black;*/
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+.type-selector:hover {
+    /*border: solid 1px red;*/
+}
+.type-selector span{
+    font-size: 25px;
+    text-align: center;
+    color: white;
+    /*border: solid .3vh black;*/
+        padding-left: 0;
+    padding-right: 0;
+    border-radius: 15px;
+        border: solid 1px white;
+
+
+}
+.type-selector span[name="movie"]{
+    margin-right: 10px;
+}
+
+/*.type-selector span[name="tv"]{*/
+/*    border-left: solid .3vh white;*/
+/*}*/
+
+.type-selector span.is-selected{
+    background: white;
+    color: black;
+}
+
+.type-selector span:hover{
+    background: white;
+    color: black;
+    transition: all .3s ease-in-out;
+}
+
+
+.sidebar-nav .heading{
+    display: block;
+    font-size: 30px;
+    text-align: center;
+}
+
+.sidebar-nav .genres-container {
+    /*margin-top: 30px;*/
+    margin-bottom: 30px ;
+}
+
+.sidebar-nav .genres-container .btn{
+    background: red;
+}
+
+.genres-container, #Genres{
+    justify-content: center;
+}
+
+.genre-box{
+    margin: 10px;
+    height: 85px;
+    width: 135px;
+    text-align: center;
+    text-indent: initial;
+    border-radius: 20px;
+}
+
+.genre-box span{
+    font-size: 20px;
+    color: white;
+    word-break: break-all;
+    line-height: 0;
+    vertical-align: text-bottom;
+}
+
+.genre-box-container{
+    position: relative;
+    /*height: fit-content;*/
+    margin: 1vh;
+}
+
+.checked {
+    position: absolute;
+    top: 58%;
+    left: 43%;
+    bottom: 0;
+    margin: auto;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.checked i{
+    color: white;
+    font-size: 25px;
+}
+.genre-selected{
+    opacity: .5;
+}
+
+.releaseDate{
+    width: 100%;
+    align-items: center;
+    align-content: center;
+}
+.releaseDate input{
+    width: 50%;
+    margin-left: 20px;
+    border-radius: 15px;
+    background: #404040;
+    text-align: center;
+    color: white;
+    border: 0;
+}
+.releaseDate input:focus{
+    outline: unset;
+}
+.releaseDate div{
+    margin-bottom: 2vh;
+}
+
+.submitBtn{
+    padding: 2vh;
+    /*margin-top: 2vh;*/
+    text-align: center;
+    text-align: -webkit-center;
+}
+
+.submitBtn input{
+    border-radius: 2vh;
+    font-size: 20px;
+    display: block;
+}
+
+.submitBtn input:hover{
+    border-color: black;
+}
+
+.heading{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+.age-grp{
+  text-align: center;
+    margin-top: 20px!important;
+    margin-bottom: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+
+.age-grp span{
+  font-size: 20px;
+  border-radius: 2vh;
+  border: solid .3vh red;
+  margin-left: 3vh;
+  text-indent: 0;
+  padding: 0;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.age-grp span:hover{
+    color: red;
+    background: white;
+    border-color: white;
+}
+
+.age-grp-selected{
+  background-color: red;
+  color: white;
+}
+
+
+.selecting{
+  text-align: center;
+}
+.selecting select{
+  background: #404040 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
+  color: white;
+  max-width: 80%;
+  border: 0;
+}
+
+
+.releaseDate label{
+  font-size: 20px;
+}
+
+
+
+input[type='range'] {
+  -webkit-appearance: none;
+  background-color: #272727;
+  /* height: 20px; */
+  overflow: hidden;
+  /* width: 400px; */
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 20px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #666;
+  border-radius: 50%;
+  box-shadow: -210px 0 0 200px #333;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  border: 0;
+}
+
+input[type='range']::-moz-range-thumb {
+  background: #333;
+  border-radius: 50%;
+  box-shadow: -1010px 0 0 1000px #333;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  border: 0;
+}
+
+input[type="range"]::-moz-range-track {
+  background-color: #ddd;
+}
+
+
+.genres-container, .releaseDate, .userScore, .selecting, .age-grp, .submitBtn{
+    margin-top: 2vh;
+    justify-content: center;
+    display: flex;
+}
+
+.releaseDate, .userScore, .selecting, .age-grp, .submitBtn{
+        /*padding-right: 20px;*/
+    /*padding-left: 20px;*/
+
+}
+
+
+#minScore, #maxScore{
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+
+#moreGenres i{
+    font-size: 30px;
+    transform: rotate(0deg);
+    color: white;
+    /*padding-right: 1em;*/
+    vertical-align: middle;
+}
+
+.fa-times.cross {
+    position: absolute;
+    top: 33%;
+    right: 30px;
+    font-size: 30px;
+    display: block;
+    cursor: pointer;
+
+}
+
+
+@media screen and (max-width: 993px){
+    #moreGenres:hover{
+        background: none;
+    }
+}
+
+
+@media screen and (max-width: 771px) {
+
+    .releaseDate label{
+        max-width: 25%;
+    }
+    #sidebar-wrapper, .sidebar-nav{
+        width: 100vw;
+    }
+    .genre-box{
+        width: 140px;
+    }
+
+}
+
+
+@media screen and (max-width: 443px){
+    .genre-box{
+        width: 120px;
+    }
+}

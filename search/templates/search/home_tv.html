@@ -1,0 +1,59 @@
+{% extends 'search/base.html' %}
+{% load player_tags %}
+{% load static %}
+{% load tv_templatetags %}
+
+{% block r_content %}
+{#    {% set 8 as group_into %}#}
+{#    {% set row|grouper:6 as s %}#}
+    <span class="search-results">Searched for '{{ query.0 }}' and {{ row.total_results }} results found</span>
+    <div class="infinite-container container-fluid" id="i-c">
+    <div class="infinite-item row Row" id="toAdd">
+    {% include 'search/in_item.html' with row=row %}
+{#                {% for item in row.results %}#}
+{#                    {% if item.media_type != 'person' and item.name or item.title %}#}
+{#                <div class="col-auto text-center row-item">#}
+{#                    {% if item.poster_path or item.profile_path %}#}
+{##}
+{#                    <a href="/{{ item|get_type }}/{{ item.id }}">#}
+{#                        <img class="owl-lazy" style="border-radius: 15px"#}
+{#                            src="https://image.tmdb.org/t/p/w342{% firstof item.poster_path item.profile_path %}" alt="">#}
+{#                    </a>#}
+{#                    {% else %}#}
+{#                    <img class="owl-lazy" src="https://artworks.thetvdb.com/person/actor.jpg" alt="">#}
+{#                    {% endif %}#}
+{#                    <div class="item-content">#}
+{#                        <span class="title">{% firstof item.title item.name %}</span>#}
+{#                        <p class="overview">#}
+{#                            {{ item.overview }}#}
+{#                        </p>#}
+{#                        <div class="buttons row">#}
+{#                            <button type="submit" class="col btn btn-transparent" data-placement="top" data-toggle="top" title="Play Movie"><i class="fas fa-play"></i></button>#}
+{#                            <button type="submit" class="col btn btn-transparent" data-placement="top" data-toggle="top" title="Add to List"><i class="fas fa-plus"></i></button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% set counter|add:1 as counter %}#}
+{##}
+{#                </div>#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+    </div>
+
+    </div>
+
+    {% if page_obj.has_next %}
+<a class="infinite-more-link" href="?search_text={{ request.query.0 }}&page={{ page_obj.next_page  }}"></a>
+{% endif %}
+<div id="spinner" style="display:none;">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block xtra_css %}
+    <link rel="stylesheet" href="{% static 'search/css/home_tv.css' %}">
+{% endblock %}

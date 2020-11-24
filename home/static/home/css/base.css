@@ -1,0 +1,12 @@
+.dropdown-menu{
+    min-width: 60px !important;
+}
+.carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+  }
+
+.navbar {
+    background: transparent!important;
+}

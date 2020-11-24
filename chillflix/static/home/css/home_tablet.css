@@ -1,0 +1,48 @@
+@media (orientation: portrait){
+    body .Bg-Test{
+        height: 33vh;
+    }
+    .carousel-content-row{
+        max-width: 40%;
+    }
+    .genres-container{
+        display: none;
+    }
+    .carousel-content-row .main-title-grow{
+        transform: scale(1.2) translateX(5vh) translateY(6vh)!important;
+    }
+    .title-container{
+        margin-top: 0em;
+    }
+    .title-container .main-title{
+        font-size: 3.5vh!important;
+    }
+    .owl-stage-outer{
+        padding-top: 0;
+    }
+    .item-info{
+        font-size: 2vh;
+    }
+    .actions{
+        margin-top: 0em;
+        font-size: 1.5vh;
+    }
+
+}
+.Bg-Test{
+    height: 50vh;
+}
+.carousel-content-row .title-container{
+    margin-bottom: 1em;
+}
+
+.main-title-grow{
+    transform: scale(1.2) translateX(5vh) translateY(11vh)!important;
+}
+
+.overview-container{
+    display: none;
+}
+.trailer{
+    display: none;
+}

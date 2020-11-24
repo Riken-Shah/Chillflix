@@ -1,0 +1,343 @@
+@media screen and (min-width: 1300px){
+    body{
+        font-size: calc(100% + .5em);
+    }
+    .movie-li-item li{
+        font-size: calc(100% + .2em);
+        font-weight: 500;
+    }
+    .play-button button img{
+        width: 8vh!important;
+    }
+    .mytitle h1{
+        font-size: 5vh!important;
+    }
+
+    #trailer-btn{
+        margin-right: 3rem;
+    }
+    #trailer-btn span{
+        font-size: calc(100% + .45em);
+    }
+    #trailer-btn img{
+        width: calc(100% + 1vw);
+        padding-bottom: .1em;
+    }
+    .add-list .add-btn img{
+        width: auto!important;
+    }
+    .tagline{
+        margin-top: 2em!important;
+    }
+    .tagline span{
+        font-size: 140%!important;
+    }
+    .small-info-box{
+        font-size: 2vw!important;
+    }
+    .extras{
+        margin-top: 2em;
+        max-width: unset;
+        padding-left: 2em;
+    }
+    .left-fit {
+        margin-left: -3vh!important;
+    }
+}
+@media only screen and (orientation: landscape) {
+    .overview-container p {
+        font-size: 2vw !important;
+    }
+
+    .item span {
+        font-size: 2.2vw !important;
+    }
+
+    .cast h2, .directors h2 {
+        font-size: 3.5vw !important;
+    }
+
+    .trailer-btn img {
+        margin-top: -1vh;
+    }
+
+    .list-inline-item {
+        font-size: 2vw !important;
+    }
+
+    .small-info-box {
+        font-size: 1.5vw !important;
+    }
+
+    .epi-overview p {
+        font-size: 2.3vw !important;
+    }
+
+    #epi-card .card-title {
+        font-size: 2.8vw !important;
+    }
+
+    .play-button button img {
+        width: 5vw !important;
+    }
+
+    .left-fit {
+        max-height: 40vw !important;
+    }
+}
+body{
+    background: black;
+    color: white;
+    font-family: Century;
+}
+
+.main-content {
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(9,9,121,0) 50%, rgba(0,0,0,1) 65%);
+
+    /* To hide backdrop image */
+    overflow: hidden;
+    margin-top: 2em;
+
+}
+
+.content-row{
+    max-width: 40%;
+    color: white;
+    /* align-self: center; */
+}
+
+.content{
+    margin-top: 2em;
+    margin-left: 1em;
+}
+/* Backdrop Image Setting */
+.backdrop-img {
+    display: grid;
+    height: 100%;
+    align-items: center;
+    max-width: 60%;
+}
+.left-fit {
+    max-height: fit-content;
+    height: auto;
+     margin-left: -6vh;
+    /*margin-left: -1rem!important;*/
+    z-index: -1;
+}
+
+.movie-li-item{
+    padding-top: .5em;
+    /*margin-bottom: 1em!important;*/
+
+    /* Centring It on the screen*/
+    float: none;
+    margin: 0 auto 10px;
+    /*display: table;*/
+
+    /* Reducing Font Size*/
+    font-size: 1.8vw;
+    display: block;
+    text-align: center;
+    margin-left: 1em;
+}
+
+.list-inline-item{
+    color: gray;
+    font-weight: lighter;
+    font-size: 1.5vh;
+    margin-right: .25em!important;
+}
+
+/* Create dot for genres */
+.dot {
+    height: 6px;
+    width: 6px;
+    background-color: grey;
+    border-radius: 50%;
+    display: inline-block;
+    /* To Make it Center */
+    margin-bottom: 2px;
+}
+
+.certification{
+    border: solid white 1px;
+    padding-inline-start: .4em;
+    padding-inline-end: .4em;
+}
+
+.all-buttons{
+    /* margin-inline-start: 1em */
+    padding-left: 1em;
+    margin-inline-end: 1em;
+    padding-top: 1em;
+}
+
+.trailer button{
+    background: transparent;
+    border: solid red 2px;
+    color: white;
+    font-weight: lighter;
+    /*border-radius: 9px;*/
+    /* padding: 1.2em; */
+    /* margin-left: .2em; */
+    /* padding-top: .4em; */
+    /* padding-bottom: .4em; */
+    /* padding-right: .5em; */
+    max-width: auto;
+    padding: .6em;
+    margin-right: 1rem;
+}
+
+.add-list{
+    background: transparent;
+    border-radius: 9px;
+    border: solid red 2px;
+    color: white;
+    font-size: 1.5em;
+}
+
+.add-list i{
+    padding: .6em;
+}
+
+.tagline{
+    margin-top: 2.5vh;
+}
+
+.tagline span{
+    font-weight: inherit;
+    font-size: 120%;
+    color: #9e9e9e;
+    /* font-size: 2vh; */
+    align-self: center;
+
+}
+
+.small-info-box{
+    font-size: 1.5vh;
+}
+
+/* Overview */
+.overview-container{
+    padding-top: 1em;
+    color: white;
+    display: block;
+}
+.overview-container p{
+    /*margin-top: 1em;*/
+    font-weight: lighter;
+    color: white;
+    font-size: 2vh;
+}
+
+.rating{
+    display: inline;
+    position: absolute;
+    right: 1em;
+    margin-top: .4em;
+    cursor: pointer;
+    color: red;
+    font-size: .7em;
+}
+
+.second{
+    margin-inline-start: .5em;
+    margin-inline-end: 1em
+}
+
+.item span{
+    font-size: 2.2vh;
+    font-weight: 200;
+    color: white;
+    padding-top: 1rem;
+    display: block;
+}
+.item img{
+    border-radius: 12px;
+}
+
+.cast, .directors{
+    margin-top: 3vh;
+}
+.cast h2, .directors h2{    
+    margin-bottom: 1rem;
+    font-size: 3.5vh;
+}
+
+.owl-stage{
+    padding-left: 0!important;
+}
+
+
+.extras div{
+    padding-top: .3em;
+}
+
+.small-info-button{
+    min-width: 12em;
+}
+
+
+    #epi-card .card-header{
+        min-width: 30%;
+    }
+    #epi-card .card-block{
+        min-width: 70%;
+    }
+
+    #epi-card .card-title{
+        font-size: 2.4vh;
+    }
+    #epi-card .card-text{
+        font-size: 1.8vh;
+    }
+}
+
+
+
+.episodes-info button{
+    margin-bottom: 1.5em;
+}
+
+#epi-card{
+    background: #2a2a29;
+    border-radius: 12px;
+    margin-top: .5em;
+    font-weight: 350;
+}
+
+#epi-card .card-header{
+    max-width: 30%;
+    padding: .5em;
+}
+
+#epi-card img{
+    width: 100%;
+}
+
+#epi-card .card-block{
+     padding: .2em;
+     align-items: center;
+     max-width: 60%;
+     width: 60%;
+     min-width: 70%!important;
+}
+
+.epi-overview{
+    font-weight: 200;
+    padding-right: 1em;
+    margin-bottom: .8em;
+    font-size: 1.8vh;
+}
+.epi-overview p{
+    padding: .5em;
+    padding-top: 0;
+}
+
+#seasonDropdownMenuButton{
+    font-size: 1.5em;
+    padding: .2em .5em .2em .5em;
+}
+
+

@@ -1,0 +1,152 @@
+@media screen and (min-aspect-ratio: 16/9) and (max-aspect-ratio: 2/1){
+    .Bg-Test{
+        height: 75vh!important;
+    }
+}
+
+body{
+    background: black;
+}
+
+.navbar{
+    background-color: transparent!important;
+}
+
+.Bg-Test{
+    background-position-y: 0!important;
+    background-repeat: no-repeat!important;
+    background-position: center!important;
+    background-size: cover!important;
+    /* min-height: 70vh; */
+    position: relative;
+    max-height: 70vh;
+
+}
+
+.main-item{
+    font-size: 4vh;
+    color: white;
+    text-align: center;
+    display: block;
+    min-height: 60vh;
+}
+.main-item button{
+    font-size: 3vh;
+}
+
+.main-item .buttons{
+    /* font-size: 3vh; */
+    position: absolute;
+    bottom: 3%;
+    left: 5%;
+    right: 5%;
+    text-align: center;
+
+}
+.main-item span{
+    padding: 0;
+}
+.infinite-item h2{
+    font-size: 4vh;
+    margin-top: 3vh;
+    color: white;
+    padding-bottom: 1vh;
+}
+
+/* If Phone is Landscape */
+#Bg-Trailer{
+    display: inline-block;
+    position: absolute;
+    /* width: 104%; */
+    width: -webkit-fill-available;
+    width: -moz-available;
+    height: 180%;
+    margin-top: -11%;
+    pointer-events: none;
+    opacity: 0;
+    transition: all .5s ease-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.bgVisible{
+    /*display: inline-block;*/
+    opacity: 1!important;
+    transition: all .8s ease-in;
+}
+
+.landscape-main{
+    display: block;
+    color: white;
+    margin-left: 1em;
+    max-width: 35%;
+    height: 75%;
+}
+
+.main-title{
+    font-size: 4vw;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 5vw;
+
+}
+
+.main-title-grow{
+    transform: scale(1.2) translateX(3vw) translateY(12vw);
+    transition: all .5s ease-in;
+}
+
+.item-info{
+    padding-top: 2vw;
+    width: max-content;
+    font-size: 2.5vw;
+    padding-bottom: 1vw;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    /* To Make it Center */
+    /*margin-bottom: 2px;*/
+    margin-left: .5em;
+    margin-right: .5em;
+    align-self: center;
+}
+
+
+
+.actions{
+    /* margin-top: 3rem; */
+    margin-top: 2vw;
+    margin-bottom: 3vw;
+    /* margin-left: 1vw; */
+    padding-left: 1em;
+    position: absolute;
+    bottom: -2%;
+}
+
+.small-info-box, .small-info-button{
+    border-radius: 20px;
+    /*min-width: 6em;*/
+    font-weight: 100;
+    font-size: 2vw;
+    width: max-content;
+}
+
+.small-info-button{
+    min-width: 12em;
+}
+
+.genres-container{
+    font-size: 2.2vw;
+    padding-top: 1vw;
+}

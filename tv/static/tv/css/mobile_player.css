@@ -1,0 +1,68 @@
+@media only screen and (max-width: 320px){
+    .card-title{
+        font-size: 3vh;
+    }
+    #potraitContent{
+        font-size: .7em;
+    }
+}
+
+/* For  Potrait content*/
+@media only screen and (orientation: landscape){
+    #epi-card .card-header{
+        min-width: 30%;
+    }
+    #epi-card .card-block{
+        min-width: 70%;
+    }
+
+    #epi-card .card-title{
+        font-size: 1.6rem;
+    }
+    #epi-card .card-text{
+        font-size: 1.2rem;
+    }
+}
+
+
+
+.episodes-info button{
+    margin-bottom: 1.5em;
+}
+
+#epi-card{
+    background: #2a2a29;
+    border-radius: 12px;
+    margin-top: .5em;
+    font-weight: 350;
+}
+
+#epi-card .card-header{
+    max-width: 30%;
+    padding: .5em;
+}
+
+#epi-card img{
+    width: 100%;
+}
+
+#epi-card .card-block{
+     padding: .2em;
+     align-items: center;
+     max-width: 60%;
+     width: 60%;
+     min-width: 70%!important;
+}
+
+.epi-overview{
+    font-weight: 200;
+    padding-right: 1em;
+    margin-bottom: .8em;
+}
+
+#seasonDropdownMenuButton{
+    font-size: 1.5em;
+    padding: .2em .5em .2em .5em;
+}
+
+

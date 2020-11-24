@@ -1,0 +1,37 @@
+{% load tv_templatetags %}
+{% load player_tags %}
+{#{% set search_resp as row %}#}
+                {% for item in row.results %}
+                    {% if item.media_type == 'movie' or item.media_type == 'tv' or item.poster_path %}
+                        <a href="/{{ item|get_type }}/{{ item.id }}">
+                <div class="col-auto text-center row-item">
+                    {% if item.poster_path %}
+
+
+                        <img class="owl-lazy" style="border-radius: 15px"
+                            src="https://image.tmdb.org/t/p/w342{{ item.poster_path }}" alt="">
+
+                    {% else %}
+                    <img class="owl-lazy" src="https://artworks.thetvdb.com/person/actor.jpg" alt="">
+                    {% endif %}
+                    <div class="item-content">
+                        <span class="title">{% firstof item.title item.name %}</span>
+                        <p class="overview">
+                            {{ item.overview }}
+                        </p>
+                        <div class="buttons row">
+                            <button type="submit" class="col btn btn-transparent" data-placement="top" data-toggle="top" title="Play Movie"><i class="fas fa-play"></i></button>
+                            <button type="submit" class="col btn btn-transparent" data-placement="top" data-toggle="top" title="Add to List"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                {% set counter|add:1 as counter %}
+                </div>
+                        </a>
+                    {% endif %}
+                    {% if forloop.revcounter0 == 0 and counter < group_into %}
+{#                            <script>alert('Need to add here')</script>#}
+                            <h1>Heere</h1>
+                            {% set counter|subtract:group_into as to_add_first %}
+
+                        {% endif %}
+                {% endfor %}

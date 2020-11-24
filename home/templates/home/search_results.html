@@ -1,0 +1,7 @@
+{#{{ row }}#}
+{% for item in row.results|slice:10 %}
+   <a style="color: aliceblue" class="dropdown-item" href="../../{{ item.media_type }}/{{ item.id }}">{% firstof item.title item.name %}</a>
+    {% if forloop.revcounter0 == 0 and search_resp|length > 10%}
+       <a style="color: aliceblue" class="dropdown-item" href="#{{ item.url }}">More Results ...</a>
+    {% endif %}
+{% endfor %}

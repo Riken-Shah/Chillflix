@@ -1,0 +1,199 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% load static %}
+{% load player_tags %}
+{% load tv_templatetags %}
+
+{% block content %}
+<div class="main-item potrait">
+  <input type="hidden" value="https://image.tmdb.org/t/p/w780{{ carousel.0.backdrop_path }}" id="bg-img-0">
+  <input type="hidden" id="carousel-trailer-0" value="{{ carousel.0.videos.all|get_trailer_link }}">
+  <!-- Adding Main Image -->
+  <style>
+    .Bg-Test {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 1) 5%, rgba(255, 255, 255, 0) 40%, rgba(250, 250, 250, 0) 77%, rgba(0, 0, 0, 1) 97%),
+      url('https://image.tmdb.org/t/p/w500{{ carousel.0.poster_path }}');
+    }
+  </style>
+  <div class="buttons row ">
+    <span class="item col"><i class="fas fa-play"></i></span>
+    <button class="btn btn-danger item col">Play Trailer</button>
+    <span class="item col"><i class="fas fa-plus"></i></span>
+  </div>
+</div>
+<div class="landscape-main" style="display: none;">
+  {% set carousel.0 as item %}
+  {% set item|get_type as type %}
+  {% if type == 'tv' %}
+      <!-- Valid All Season -->
+      {% get_all_season item.seasons as seasons%}
+      {% set item.episode_run_time.0 as runtime %}
+      {% set item.first_air_date as year %}
+      {% set item.content_ratings as certification %}
+
+      {% set 30 as max_overview_word %}
+      {% set 'Creators' as creators_name %}
+      {% set item.created_by as creators %}
+      {% set item.credits as credits %}
+      {% set item.similar.results as similar_items %}
+  {% else %}
+      {% set item.runtime as runtime %}
+      {% set item.release_date as year %}
+      {% get_certification_movie item.releases as certification %}
+      {% set 13 as max_overview_word %}
+      {% set 'Directors' as creators_name %}
+      {% set item.credits as credits%}
+  {% endif %}
+
+  <div class="title-container">
+    <span class="main-title">{% firstof item.title item.name %}</span>
+    <div class="d-flex item-info hide">
+      <!-- Runtime -->
+      <div class="runtime">
+        <span>{% get_hr_min_format runtime %}</span>
+      </div>
+      <div class="dot"></div>
+      <!-- Certification -->
+      <div class="certification">
+        <span>{% firstof item.certification item.rating 'NA' %}</span>
+      </div>
+      <div class="dot"></div>
+      <!-- Year -->
+      <div>
+        <span>{% firstof item.release_date|date:'Y' item.first_air_date|date:'Y' 'NA' %}</span>
+      </div>
+      <!-- Rating -->
+      <div class="dot"></div>
+      <div class="rating">
+        {% resolve_rating item.vote_average as ratings %}
+        {% if ratings|length > 0 %}
+        <span>
+          <span style="color: white;letter-spacing: unset;">
+            {{ ratings|length }}
+          </span>
+          <span class="fa fa-star checked" style="font-size: 1.5vw"></span>
+        </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+                  <!-- Genres -->
+                  <div class="genres-container hide">
+                    <b><span style="padding-right: 1rem">Genres: </span> </b>
+                    {% for genre in item.genres.all|slice:2 %}
+                    <em><span>{{ genre }}
+                            {% if forloop.revcounter0 != 0 %}
+                            ,
+                            {% endif %}
+                        </span></em>
+                    {% endfor %}
+                </div>
+
+                  <!-- Buttons (Actions) -->
+                  <div class="actions row d-inline-flex text-center">
+                    <!-- Watch Movie -->
+                    <div class="mr-3 p-2 bg-danger small-info-button">
+                        <a class="" style="font-weight: 500;">WATCH MOVIE</a>
+                        <i class="fa fa-play-circle" style="padding-left: 5px;font-size: calc(100% + 8px)"></i>
+                    </div>
+                    <!-- Add to List -->
+                    <div class="mr-3 p-1 bg-transparent border-danger rounded-circle d-inline-flex"
+                        style="border: solid 2px red">
+                        <button class="bg-transparent border-0">
+                            <i class="fa fa-plus" aria-hidden="true"
+                                style="color: white;font-size: calc(100% + .4vh)"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+</div>
+
+<div class="container-fluid infinite-container">
+  <!-- Recomendation -->
+  <div class="infinite-item">
+    {% for row in rows %}
+    <h2>{{ row.name }}</h2>
+    <div class="owl-carousel owl-theme rows">
+
+      {% for item in row.items %}
+      <div class="item text-center row-item">
+        {% if item.poster_path %}
+        <a href="/{{ item|get_type }}/{{ item.id }}">
+          <img class="owl-lazy" style="border-radius: 15px"
+            data-src="https://image.tmdb.org/t/p/w185{{ item.poster_path }}" alt="">
+        </a>
+        {% else %}
+        <img class="owl-lazy" data-src="https://artworks.thetvdb.com/person/actor.jpg" alt="">
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% if page_obj.has_next %}
+<a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+{% else %}
+
+{% endif %}
+<div class="d-flex justify-content-center" style="display:none;">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+{% block add_js %}
+<!-- Owl JS -->
+<script src="{% static 'movie/owlcarousel/owl.carousel.js' %}"></script>
+
+<!-- Youtube Iframe Player API -->
+<!-- <script src="https://www.youtube.com/iframe_api"></script> -->
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="{% static 'home/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'home/js/infinite.min.js' %}"></script>
+<script src="{% static 'home/js/home_mobile.js'%}"></script>
+
+<script>
+  const infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0],
+    handler: function (direction) {
+    },
+    offset: 'bottom-in-view',
+
+    onBeforePageLoad: function () {
+      $('.spinner-border').show();
+      $('.rows').owlCarousel(baseOwlCarouselSetting)
+    },
+    onAfterPageLoad: function () {
+      $('.spinner-border').hide();
+      $('.rows').owlCarousel(baseOwlCarouselSetting)
+    }
+  });
+</script>
+
+
+
+{% endblock %}
+
+{% block add_css %}
+<!-- Owl CSS -->
+<link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.carousel.min.css'%}">
+<link rel="stylesheet" href="{% static 'movie/owlcarousel/owl.theme.default.min.css'%}">
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'home/css/home_mobile.css'%}">
+{% endblock %}

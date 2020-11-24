@@ -1,0 +1,118 @@
+
+/* Slider CSS */
+/*.carousel-cell {*/
+/*  width: auto;*/
+/*  height: auto;*/
+/*  margin-right: 20px;*/
+/*  border-radius: 5px;*/
+/*  background-position: center center;*/
+/*  background-size: cover;*/
+/*}*/
+
+/*.carousel-cell:before {*/
+/*  display: block;*/
+/*  text-align: center;*/
+/*  !* content: counter(carousel-cell) ; *!*/
+/*  !* line-height: 200px; *!*/
+/*  font-size: 80px;*/
+/*  color: white;*/
+/*}*/
+
+/*!* Custom CSS *!*/
+/*.carousel-container{*/
+/*  top: 5%;*/
+/*  right: 5%;*/
+/*  padding: 5px;*/
+/*  background-color: tomato;*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  z-index: 1;*/
+/*}*/
+
+.carousel-poster{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-detail{
+  order:1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightblue;
+  overflow: hidden;
+  width: 0;
+  transition: width 1s;
+  z-index: 2;
+}
+
+/* .carousel-poster:hover + .carousel-detail {
+  width: 400px;
+  z-index: 3;
+} */
+
+/*.carousel-detail.grow {*/
+/*  width: 300px;*/
+/*  overflow: hidden;*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*}*/
+
+
+
+
+/*.carousel-container:hover{*/
+/*  background-color: #343a40!important;*/
+/*  position: relative;*/
+/*  z-index: 5;*/
+/*  left: 53.84%!important;*/
+/*  -webkit-transform: scale(1.4);*/
+/*  -ms-transform: scale(1.4);*/
+/*  transform: scale(1.4);*/
+/*  transition: 0.5s ease;*/
+
+/*}*/
+
+/*.carousel-poster{*/
+/*  width: auto;*/
+/*  transition: width 1s;*/
+/*}*/
+
+.flickity-viewport{
+    padding-top: 40px;
+    /* height: 410px!important; */
+    height: 310px!important;
+}
+
+.carousel {
+
+    background:#0f171e;
+  }
+
+/*  Carousel Cell */
+.poster-cell {
+    max-width: 350px;
+    max-height: 300px;
+    margin-right: 20px;
+    background-position: center center;
+     background-size: cover;
+    -webkit-transition:width 500ms;
+    -moz-transition:width 500ms;
+    transition:width 500ms;
+}
+
+/* For Img Inside Cell */
+.image-poster {
+    display: block;
+    max-height: 220px;
+    /* vertically center */
+    top: 50%;
+    /* transform: translateY(-50%) */
+  }
+
+body{
+  background: #0f171e;
+}

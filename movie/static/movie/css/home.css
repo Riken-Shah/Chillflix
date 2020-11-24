@@ -1,0 +1,255 @@
+@media screen and (min-width: 768px) and (max-width: 1023px){
+    html,body{
+         /*font-size: 70%;*/
+        font-size: 73%;
+     }
+    /*.col .backdrop-image-container {*/
+    /*   height: 30vh;*/
+    /*   }*/
+    .top-left .small-credits{
+        padding-top: 21.33%;
+    }
+    .top-left .tagline{
+        margin-top: 1vh
+    }
+        .list-inline-item .dot{
+        height: .3vh;
+        width: .3vh;
+    }
+
+   }
+
+
+/* For Smaller Device for Ipad Potrait*/
+@media screen and (orientation: portrait) and (min-width: 1024px){
+    html,body{
+         font-size: 80%;
+     }
+    /*.col .backdrop-image-container {*/
+    /*   height: 30vh;*/
+    /*   }*/
+    .top-left .small-credits{
+        padding-top: 25.33%;
+    }
+    .top-left .tagline{
+        margin-top: 1vh
+    }
+    .list-inline-item .dot{
+        height: .3vh;
+        width: .3vh;
+    }
+    .list-inline .list-inline-item{
+        font-size: 1.1vh;
+    }
+   }
+
+/* For Medium Device */
+@media screen and (min-width: 1025px), (orientation: landscape) and (min-width: 1024px){
+    html,body{
+         font-size: 1.5vh;
+     }
+    /*.col .backdrop-image-container {*/
+    /*   height: 54vh;*/
+    /*   }*/
+   }
+
+/* For Large Device */
+@media screen and (min-width: 1367px) {
+ html,body{
+      font-size: 1.8vh;
+  }
+ /*.col .backdrop-image-container {*/
+ /*   height: 65vh;*/
+ /*   }*/
+}
+
+/* For Xtra Large Device */
+@media screen and (min-width: 1920px) {
+ html,body{
+      font-size: 1.9vh;
+  }
+    .all-buttons .play button{
+        max-width: 100%;
+    }
+    .all-buttons .trailer button{
+        margin-left: 1em;
+        max-width: 100%;
+    }
+    .top-left .small-credits{
+     padding-top: 41%;
+    }
+}
+
+/* For Xtra Xtra Large(4k) Device */
+@media screen and (min-width: 2560px) {
+  html,body{
+      font-size: 2vh;
+  }
+}
+
+body{
+    background: black;
+    /*line-height: 1.5;*/
+
+
+}
+/* Changing Container max-width to increase watching area */
+.container{
+    max-width: calc(100% - 2em)!important;
+    /*max-width: 1280px;!important;*/
+}
+
+.backdrop-image-container{
+    height: 72vh;
+    background-size: 100%!important;
+    color: white;
+}
+
+/*Changing top-left to induce margin*/
+.top-left{
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+}
+
+.title{
+    color: white;
+    font-weight: bolder;
+    font-stretch: 1%;
+}
+.list-inline{
+    margin-top: 1.2em;
+    margin-bottom: 1em!important;
+}
+
+.list-inline-item{
+    color: gray;
+    font-weight: lighter;
+    font-size: 120%;
+}
+
+/* Create dot for genres */
+.dot {
+    height: 6px;
+    width: 6px;
+    background-color: grey;
+    border-radius: 50%;
+    display: inline-block;
+/* To Make it Center */
+    margin-bottom: 2px;
+  }
+
+/* Rataing Star Colur */
+.rating{
+    margin-top: .2em;
+    font-size: 1.7em;
+}
+.rating .checked{
+    color: red;
+
+}
+.overview-container{
+    padding-top: 1em;
+    max-width: 400px;
+    position: absolute;
+    min-width: 400px;
+    margin-top: 0!important;
+}
+.overview-container p{
+    /*margin-top: 1em;*/
+    font-weight: light;
+    color: white;
+    font-size: 110%;
+}
+
+.overview-container.grow{
+    transform: scale(1.1);
+    min-width: 33.33%;
+    transition: all .2s ease-in-out;
+    background: rgb(1, 1, 1) linear-gradient(90deg, rgba(1, 1, 1, 1) 15%, rgba(29, 28, 28, 1) 57%);
+    z-index: 1;
+}
+
+.overview-container.grow  p{
+    padding-right: 1rem;
+    /* width: 31rem!important; */
+    width: 100%!important;
+    transition: all .2s ease-in-out;
+}
+
+#close-button{
+    position: absolute;
+    right: .5em;
+    display: none;
+    cursor: pointer;
+}
+
+.small-credits{
+    padding-top: 10.5rem;
+}
+.small-credits h6{
+    color: dimgrey;
+    font-weight: lighter;
+}
+
+.tagline{
+    margin-top: 2.5vh;
+}
+
+.tagline span{
+    font-weight: inherit;
+    font-size: 150%;
+    /* font-size: 2vh; */
+
+    color: dimgrey;
+}
+
+/* Bottom left text */
+.bottom-left {
+  position: relative;
+  bottom: -1em;
+  left: 0;
+}
+
+
+.play button{
+    background: red;
+    border: none;
+    color: white;
+    font-weight: lighter;
+    border-radius: 9px;
+
+    /* padding: 1.2em; */
+    /* padding-block: .5em; */
+    padding-top: .4em;
+    padding-bottom: .4em;
+    max-width: 75%;
+}
+
+.trailer button{
+    background: transparent;
+    border: solid red 2px;
+    color: white;
+    font-weight: lighter;
+    border-radius: 9px;
+
+    /* padding: 1.2em; */
+    /* margin-left: .2em; */
+    padding-top: .4em;
+    padding-bottom: .4em;
+    max-width: 75%;
+
+
+
+}
+
+/* Top right text */
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+  }
+
+
+
+
+  

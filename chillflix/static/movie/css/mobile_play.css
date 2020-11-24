@@ -1,0 +1,294 @@
+/* For Landscape */
+@media only screen and (orientation: landscape){
+    /* Removing Bottom Navbar */
+    #bottom-navbar{
+        display: none;
+    }
+
+    #main-card{
+        display: block;
+        /*max-height: initial;*/
+    }
+
+}
+
+@media screen and (max-width: 640px) and (orientation: landscape){
+        /* Reducing Landscape image size */
+    #poster{
+        max-width: 45%!important;
+    }
+    .all-buttons{
+        font-size: 4.2vh;
+    }
+}
+
+
+@media screen and (max-width: 371px) {
+/* In  Bottom Navbar 4th Item -> My list will removed if */
+    #mylist{
+        display: none;
+    }
+}
+
+body{
+    background: black;
+    /* For Bottom Navbar */
+    padding-bottom: 70px;
+}
+/* CSS for bootstrap bottom icon top*/
+.nav-icon{
+  text-align: center;
+  /*padding-left: 1.2em;*/
+}
+
+.fixed-bottom{
+  padding-bottom: 0!important;
+}
+.fixed-bottom .nav-item a{
+  color: white;
+  font-size: 83%;
+  font-weight: lighter;
+  padding-top: 0!important;
+}
+.fixed-bottom .nav-item .fa{
+  font-size: calc(100% + .9em);
+  color: white;
+}
+
+#main-card {
+    /* Centering Image */
+    float: none;
+    /* Removing Padding */
+    margin: 0!important;
+    width: auto!important;
+    /* To Get Image in Full Screen*/
+    /* Gradient Effect */
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 5%, rgba(255,255,255,0) 40%, rgba(250,250,250,0) 77%, rgba(0,0,0,1) 97%);
+
+    /*max-height: in;*/
+    justify-content: center;
+    /*max-height: 25vh;*/
+    /*display: block;*/
+}
+
+.mytitle h1{
+    color: white;
+    display: inline;
+    font-size: 4vh;
+    width: 1em;
+    font-weight: 300;
+}
+.movie-li-item{
+    padding-top: 1em;
+    /*margin-bottom: 1em!important;*/
+
+    /* Centring It on the screen*/
+    float: none;
+    margin: 0 auto 10px;
+    /*display: table;*/
+
+    /* Reducing Font Size*/
+    font-size: 1.8vh;
+    display: block;
+    text-align: center;
+    margin-left: 1em;
+}
+
+.list-inline-item{
+    color: gray;
+    font-weight: lighter;
+    font-size: 120%;
+}
+
+/* Create dot for genres */
+.dot {
+    height: 6px;
+    width: 6px;
+    background-color: grey;
+    border-radius: 50%;
+    display: inline-block;
+    /* To Make it Center */
+    margin-bottom: 2px;
+}
+
+.certification{
+    border: solid white 1px;
+    padding-inline-start: .4em;
+    padding-inline-end: .4em;
+}
+
+.all-buttons{
+    margin-inline-start: 1em;
+    margin-inline-end: 1em;
+}
+
+.trailer button{
+    background: transparent;
+    border: solid red 2px;
+    color: white;
+    font-weight: lighter;
+    /*border-radius: 9px;*/
+    /* padding: 1.2em; */
+    /* margin-left: .2em; */
+    padding-top: .4em;
+    padding-bottom: .4em;
+    max-width: 75%;
+}
+
+.add-list{
+    background: transparent;
+    border-radius: 9px;
+    border: solid red 2px;
+    color: white;
+    font-size: 1.5em;
+}
+
+.add-list i{
+    padding: .6em;
+}
+
+.tagline{
+    margin-top: 2.5vh;
+}
+
+.tagline span{
+    font-weight: inherit;
+    font-size: 150%;
+    color: #9e9e9e;
+    /* font-size: 2vh; */
+    align-self: center;
+
+}
+
+/* Overview */
+.overview-container{
+    padding-top: 1em;
+    color: white;
+    display: block;
+}
+.overview-container p{
+    /*margin-top: 1em;*/
+    font-weight: lighter;
+    color: white;
+    font-size: 110%;
+}
+
+.rating{
+    display: inline;
+    position: absolute;
+    right: 1em;
+    margin-top: .4em;
+    cursor: pointer;
+    color: red;
+    font-size: .7em;
+}
+
+.epi-overview, .episodes-info, .directors, .cast, .overview-container{
+    margin-inline-start: 1em;
+    margin-inline-end: .5em;
+    color: white;
+}
+.owl-carousel{
+    margin-top: .8em;
+    margin-block-end: 1em;
+}
+
+.directors span, .cast span{
+    font-weight: 400;
+    font-size: 3.5vh;
+    margin-block-end: 1em;
+    display: inline-block;
+
+}
+.owl-lazy{
+    border-radius: 10px;
+}
+
+
+
+/* Landscape CSS */
+
+.card-landscape {
+    background: none;
+    min-height: 75vh;
+}
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  filter: blur(2px);
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+.for-landscape{
+    margin-top: 2em;
+    /* Fixing Overflow   */
+    margin-right: 0!important;
+    padding-right: 0;
+}
+
+#landscape-info{
+    padding-right: 0;
+    min-width: 70%;
+    align-self: center;
+}
+.details-movie-landscape{
+    padding-left: 2em;
+}
+.details-movie-landscape .mytitle{
+    padding-left: 0!important;
+}
+
+.poster-image-landscape{
+    padding-right: 2em;
+    max-width: 50%;
+}
+
+.poster-image-landscape img{
+    border-radius: 25px;
+}
+
+#landscape-info {
+
+}
+.movie-li-item-landscape{
+        padding-top: 1em;
+        /*margin-bottom: 1em!important;*/
+    
+        /* Centring It on the screen*/
+
+        /* Reducing Font Size*/
+        font-size: 3.5vh;
+    padding-left: 3em;
+    }
+    
+.movie-li-item-landscape .list-inline-item{
+        color: #b9b9b9;
+        font-weight: lighter;
+        font-size: 120%;
+    }
+.for-landscape .tagline-landscape{
+    color: grey;
+    font-size: 3.5vh!important;
+    font-weight: 200;
+}
+
+#poster {
+    padding-left: 1em;
+    min-width: 30%;
+}
+
+#poster img{
+    z-index: 1;
+    max-height: 60vh;
+    width: auto;
+
+}
+
+#after-overivew{
+    background: black;
+}

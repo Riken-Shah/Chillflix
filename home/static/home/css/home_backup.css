@@ -1,0 +1,100 @@
+/* Example Slider */
+/* external css: flickity.css */
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .carousel-cell {
+    width: auto;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 5px;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .carousel-cell.is-selected {
+    /* background: #ED2; */
+  }
+
+  /* cell number */
+  .carousel-cell:before {
+    display: block;
+    text-align: center;
+    /* content: counter(carousel-cell) ; */
+    /* line-height: 200px; */
+    font-size: 80px;
+    color: white;
+  }
+/* .carousel-cell-image:hover{
+    border: solid 5px #343a40;
+    z-index: 2;
+    width: 600px;
+    -webkit-transform: scale(1.4);
+    -ms-transform: scale(1.4);
+    transform: scale(1.4);
+    transition: 0.5s ease;
+    background-color: #343a40!important;
+  } */
+  /* .carousel-cell-image:hover .col-md-4:hover{ */
+    /* padding-left: 0px; */
+  /* } */
+.flickity-viewport{
+    padding-top: 40px;
+    /* height: 410px!important; */
+    height: 310px!important;
+}
+
+/* Testing */
+.carousel-cell-image{
+  position: fixed;
+  top: 5%;
+  right: 5%;
+  display: flex;
+  position: relative;
+  padding: 5px;
+  justify-content: space-between;
+  overflow: hidden;
+  -moz-transition:all 0.2s;
+  -webkit-transition:all 0.2s;
+   transition:all 0.2s;
+}
+.carousel-cell-image .details{
+  order:-1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightblue;
+  /* white-space:nowrap; Keep text always one line */
+  overflow:hidden;
+  width:0;
+  transition: width 1s;
+}
+.carousel-slider {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.details:hover{
+  width: 400px;
+}
+
+.carousel-poster:hover{
+  width: 500px;
+}
+/* ./Example Slider */
+
+
+
+
+
+
+
+
+
+/* Example Slider */
+
+

@@ -1,0 +1,146 @@
+{% extends  'home/base.html'%}
+{% load static %}
+{% load custom_tag %}
+<!-- Title -->
+{% block title %}
+Home
+{% endblock %}
+
+<!-- Main Content -->
+{% block content %}
+<!-- Carousel -->
+<!--Carousel Wrapper-->
+<div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel">
+  <!--Indicators-->
+  <ol class="carousel-indicators" id="carousel-indicators">
+    {% for item in carousel %}
+    <li data-target="#carousel-example-2" data-slide-to="{{ forloop.counter0 }}"
+      class="{% if forloop.counter0 == 0 %}active {% endif %}"></li>
+    {% endfor %}
+    <li data-target="#carousel-example-2" data-slide-to="1"></li>
+    <li data-target="#carousel-example-2" data-slide-to="2"></li>
+  </ol>
+  <!--/.Indicators-->
+  <!--Slides-->
+  <div class="carousel-inner" role="listbox">
+    {% for item in carousel %}
+    <div class="carousel-item
+    {% if forloop.counter0 == 0 %}
+        active
+     {% endif %}
+        ">
+      <div class="view">
+          <a href="{%get_random_url item %}">
+        <img class="d-block w-100" style="max-height:600px;"
+          src="https://image.tmdb.org/t/p/w1280{{ item.backdrop_path }}" alt="First slide">
+        <div class="mask rgba-black-light"></div>
+          </a>
+      </div>
+      <div class="carousel-caption">
+        <h3 class="h3-responsive">{% firstof item.title item.name %}</h3>
+        <p>{{ item.overview|truncatewords:25 }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<!--/.Slides-->
+<!--Controls-->
+<a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  <span class="sr-only">Previous</span>
+</a>
+<a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <span class="sr-only">Next</span>
+</a>
+<!--/.Controls-->
+</div>
+<!--/.Carousel Wrapper-->
+<!-- Carousel Completed -->
+{#    <div class="carousel">#}
+{#        <div class="carousel-cell"#}
+{#        data-flickity='{"lazyLoad": true, "draggable": false, "freeScroll": false, "fade":true}'>#}
+{#            <img class="carousel-cell-image"#}
+{#                 data-flickity-lazyload="https://image.tmdb.org/t/p/original/{{ item.backdrop_path }}" />#}
+{#                {% endfor %}#}
+{##}
+{#        </div>#}
+{#    </div>#}
+<!-- Main Content -->
+<div class="container-fluid infinite-container">
+  <div class="infinite-item">
+    {% for row in rows %}
+    <h1 class="text-white"> {{ row.name }}</h1>
+    <div class="carouselx {{ page_obj.number }}"
+              data-flickity='{"lazyLoad": 5, "draggable": false, "groupCells": true, "cellAlign": "center", "freeScroll": true, "pageDots": false, "imagesLoaded": true}'>
+      {% get_obj row as item%}
+{#      {% for x in item.all %}#}
+      {% for x in row.items %}
+      <div class="carousel-cell poster-cell">
+          <a href="{% get_random_url x %}">
+
+{#                    <img class="carousel-cell-image image-poster" src="https://image.tmdb.org/t/p/w220_and_h330_face{{ x.poster_path }}"/>#}
+        <img class="carousel-cell-image image-poster"
+          data-flickity-lazyload="https://image.tmdb.org/t/p/w220_and_h330_face{{ x.poster_path }}">
+          </a>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+{% if page_obj.has_next %}
+<a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+{% else %}
+
+{% endif %}
+
+<div class="d-flex justify-content-center" style="display:none;">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<!-- End of Main Content -->
+{% endblock %}
+
+{% block add_js %}
+<script src="{% static 'home/js/home.js' %}"></script>
+<!-- For Carousel -->
+<script src="https://npmcdn.com/flickity@2/dist/flickity.pkgd.js"></script>
+{#    <script src="{% static "home/js/jquery-2.2.4.min.js" %}"></script>#}
+<script src="{% static 'home/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'home/js/infinite.min.js' %}"></script>
+<script>
+  const infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0],
+    handler: function (direction) {
+    },
+    offset: 'bottom-in-view',
+
+    onBeforePageLoad: function () {
+      $('.spinner-border').show();
+      $carousel = $('.carouselx').slice(1);z
+      $carousel.flickity(baseFlickityOptions);
+
+    },
+    onAfterPageLoad: function () {
+      $('.spinner-border').hide();
+      $('.carouselx').filter(function () {
+        return (this.classList.value.search("flickity-enabled") == -1)
+      })
+        .flickity(baseFlickityOptions);
+    }
+  });
+
+
+</script>
+{% endblock %}
+
+{% block  add_css %}
+<link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+<!-- For Carousel -->
+<link rel="stylesheet" href="https://npmcdn.com/flickity@2/dist/flickity.css">
+{% endblock %}
